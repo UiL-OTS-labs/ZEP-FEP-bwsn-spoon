@@ -1,0 +1,431 @@
+/******************************************************************************\
+EXPERIMENT:     spoon7.fep
+DESCRIPTION:    Experiment to elicit spoonerisms.
+AUTHOR:         T.J.G. Veenker (UiL-OTS), S.G. Nooteboom, A.T. Manus 
+DATE:           2013-04-08
+RELATED FILES:  spoon7.sti
+REMARKS:        Same as spoon4.fep, but with brown noise obsfucation
+				which is provided on a second channel to work around
+				FEP limitations.
+
+This experiment presents sequences of word pairs on the screen one pair
+at a time. The subject must silently read the word pairs. Each sequence
+is followed by a cue telling the subject to repeat the last word pair
+(the test word pair) aloud. Then a second cue is presented to allow the 
+subject to correct. The computer generates a beep when the second cue
+begins. This beep and the subject's responses should be recorded on an
+audio tape for later analysis (speech left, beep right). The experiment
+constists of two parts, a practice part and a test part. The practice
+part starts with a 250 ms beep, the test parts with a 500 ms beep.
+
+There are two stimulus lists testlistO and testlistE (see spoon7.sti).
+Let M be the number of word pair blocks in both lists. Then for subject 
+N, the word pair blocks will be presented in the order given by column 
+(N-1)/2 modulus M of a latin square. All odd numbered subjects get list
+testlistO followed by testlistE. All even numbered subjects get list 
+testlistE followed by testlistO. For each M*2 subjects a new latin square
+is used. 
+\******************************************************************************/
+
+Color:	black["#000000"],	// black
+		white["#F0F0E0"],	// paper-like white
+		base["#408080"],	// screen background color
+		warn["#E0E000"],	// warning/message text color
+		special["#F0B040"],	// special target label text color
+		bcol1["#80D0D0"],	// button background color 1
+		bcol2["#D08080"];	// button background color 2
+		
+Font:	large["-*-helvetica-medium-r-normal-*-48-*-*-*-*-*-*-*"],
+		medital["-*-helvetica-medium-o-normal-*-34-*-*-*-*-*-*-*"];
+
+Screen:
+{
+    color:		white, base;
+    font:		medital;
+}
+
+// Label for presenting the visual stimulus.
+Label: target
+{
+    font:		large;
+    color:		black, white;
+    anchor:		50, 0;
+    size:		600, 150;
+}
+
+// Label for messages etc.
+Label: alert
+{
+    color:		warn, base;
+    anchor:		50, 0;
+    size:		600, 50;
+}
+
+Button: pause[1]
+{
+    text:		"Start";
+    color:		black, bcol2;
+    anchor:		50, 0;
+    size:		160, 80;
+}
+
+Audio:
+{
+    sampling_rate:	32000;
+    attenuation:	0.0;
+}
+
+Tone: beep[PRIMARY, 1]
+{
+    frequency:		1000.0, 1000.0;
+    attenuation:	12.0;
+    fade_duration:	1, 1;
+}
+
+// Seed values for latin square shuffle.
+List: seed[0]
+{
+    value:		Integer;
+}
+
+// Practice stimulus list.
+List: praclist[0,0]
+{
+    wordpair:		String;
+    statusln:		String;
+    fondist:		Integer;
+    spoon1:			String;
+    spoon2:			String;
+    lexicality:		String;
+    TB:				String;
+}
+
+// Stimulus list to be used as first list for odd numbered subjects.
+List: testlistO[0,0]
+{
+    wordpair:		String;
+    statusln:		String;
+    fondist:		Integer;
+    spoon1:			String;
+    spoon2:			String;
+    lexicality:		String;
+    TB:				String;
+}
+
+// Stimulus list to be used as first list for even numbered subjects.
+List: testlistE[0,0]
+{
+    wordpair:		String;
+    statusln:		String;
+    fondist:		Integer;
+    spoon1:			String;
+    spoon2:			String;
+    lexicality:		String;
+    TB:				String;
+}
+
+Procedure:	parts,		// main experiment procedure
+			trials,		// procedure for running a block of trials
+			items;		// procedure for running the trial items
+
+LatinSquare:	LS;		// latin square object
+
+Integer:	stimdur,	// duration of stimulus (word pair)
+			isi,		// delay between stimuli
+			respdur,	// duration of response period
+			corrdur;	// duration of correction period
+
+Integer:	lsrow,		// LS row index (trial number)
+			lscol,		// LS column index (subject number)
+			block,		// value of LS[lsrow,lscol]
+			lsseed,		// LS seed value
+			testing,	// set during real test part
+			done,		// set when trial done
+			alldone;	// set when "all" done
+
+ListRef:	list[praclist];	// list ref. (initially referencing praclist)
+
+//------------------------------------------------------------------------------
+
+init
+{
+    // Position visual objects.
+    alert.width = screen.width - 100;
+    target.position = screen.width / 2, screen.height / 3;
+    alert.position = screen.width / 2, target.y_position + target.height + 50;
+    pause.position = screen.width / 2, alert.y_position + alert.height + 50;
+
+    // Show the "always-visible" objects.
+    alert.show();
+
+    // Set timing parameters (used below).
+    stimdur = 900;
+    respdur = 900;
+    corrdur = 900;
+    isi = 100;
+
+    // Check if testlistO and testlistE have same number of word pair blocks.
+    if (testlistO.entries(0) != testlistE.entries(0)) {
+		print("Lists of unequal length");
+    	finish();
+    }
+
+    // Create column index in the latin square based on subject number
+    // and pick appropriate latin square shuffle seed number. See header 
+    // at top of file.
+    if (subject.number > 0) {
+    	lscol = ((subject.number-1) / 2) % testlistO.entries(0);
+    	lsseed = seed[(subject.number-1) / (2 * testlistO.entries(0))].value;
+    }
+    else {
+    	lscol = 0;		// No subject selected.
+    	lsseed = seed[0].value;
+    }
+
+    // Setup parts procedure object and start it.
+    parts.num_items = 4;
+    parts.time = now();
+    parts.start();
+}
+
+//------------------------------------------------------------------------------
+
+proc(parts.begin)
+{
+
+    if (subject.number % 2) {
+    	log("# Odd subject number -> using \"testlistO\".\n");
+    	log("# Latin square (", testlistO.entries(0), " rows) seed value: ", 
+    	    lsseed, "\n\n");
+    }
+    else {
+    	log("# Even subject number -> using \"testlistE\".\n");
+    	log("# Latin square (", testlistE.entries(0), " rows) seed value: ", 
+    	    lsseed, "\n\n");
+    }
+    
+}
+
+proc(parts.end)
+{
+    target.hide();
+
+    // Present "thank you" message.
+    alldone = YES;
+    alert.position = screen.width / 2, screen.height / 2;
+    alert.text = "Einde experiment. Bedankt voor uw deelname.";
+    alert.start(parts.time, 1000, 3000);
+}
+
+// This is called to initiate a part.
+//   part 0:  enable "start" button
+//   part 1:  start block of practice trials
+//   part 2:  enable "continue" button
+//   part 3:  start block of (non-practice) trials
+//   part 4:  start second block of (non-practice) trials
+proc(parts.pre_item)
+{
+    if (parts.item_num == 0) {
+    	alert.text = "Klik op de knop om te beginnen...";
+		pause.start(parts.time, 250, -1);
+    }
+    else if (parts.item_num == 1) {
+    	print("# Practice part:\n");
+    	log("# Practice part:\n");
+    	log("# wordpair, \t statusln \t fondist \t spoon1 \t spoon2 \t lexicality \t TB \n");
+		trials.num_items = list.entries(0);
+		trials.time = parts.time + 1000;
+		beep.duration = 250;
+		audio.start(parts.time, 50, -1);
+		trials.start();
+		target.show();
+    }
+    else if (parts.item_num == 2) {
+        target.hide();
+    	alert.text = "Dat was de oefening...";
+		pause.text[0] = "Ga door";
+		pause.start(parts.time, 250, -1);
+    }
+    else if (parts.item_num == 3) {
+    	print("\n# Begin Test:\n");
+    	log("\n# Begin Test:\n");
+
+    	testing = YES;
+		if (subject.number % 2)
+			list = testlistO;
+		else
+			list = testlistE;
+			
+		lsrow = 0;
+
+		LS.size = list.entries(0);
+		LS.shuffle(lsseed);
+		trials.num_items = list.entries(0);
+		trials.time = parts.time + 1000;
+		beep.duration = 500;
+		audio.start(parts.time, 50, -1);
+		trials.start();
+		target.show();
+    }
+}
+
+proc(parts.post_item)
+{
+    alert.cancel(); // Just in case.
+}
+
+//------------------------------------------------------------------------------
+
+event(pause.on)
+{
+    // Display message and show start button.
+    alert.update();
+    pause.show();
+}
+
+event(pause.accept)
+{
+    // Erase message and hide start button.
+    alert.text = "";
+    alert.update();
+    pause.cancel();
+    pause.hide();
+
+    // Next part, if any.
+    parts.time = pause.accept_time;
+    parts.nextItem();
+}
+
+//------------------------------------------------------------------------------
+
+proc(trials.begin)
+{
+//    target.show();
+}
+
+proc(trials.end)
+{
+//    target.hide();
+
+    parts.time = trials.time;
+    parts.nextItem();
+}
+
+proc(trials.pre_item)
+{
+    // Get trial number to use. The Latin square array LS is not initialized
+    // (has zero rows and columns) until we get to the real test part.
+    if (testing)
+    	block = LS[lsrow, lscol];
+    else
+    	block = lsrow;
+
+    items.num_items = list.entries(1) + 2;
+    items.time = trials.time;
+    items.start();
+}
+
+proc(trials.post_item)
+{
+    // Trial done. Increment latin square row index.
+    lsrow = lsrow + 1;
+}
+
+//------------------------------------------------------------------------------
+
+proc(items.end)
+{
+    trials.time = items.time;
+    trials.nextItem();
+}
+
+proc(items.pre_item)
+{
+    if (!done) {
+    	// Check if all items in current trial have been presented.
+    	if (items.item_num == list.entries(1))
+	    done = 1;
+    	else if (list[block, items.item_num].fondist < 0)
+	    done = 1;
+    }
+
+    // If done is 1 present response cue, otherwise if done is 2 present 
+    // correction cue, otherwise present word pair.
+    if (done == 1) {
+//    	target.foreground = special;
+    	target.text = "?????";
+		target.blanking = NO;
+    	target.start(items.time, isi, respdur-100);
+		beep.duration = 50;
+		audio.start(target.estimated_on_time, respdur, -1);
+    }
+    else if (done == 2) {
+//    	target.foreground = special;
+    	target.text = "correctie?";
+		target.blanking = YES;
+    	target.start(items.time, 100, corrdur);
+    }
+    else {
+//    	target.foreground = black;
+    	target.text = list[block, items.item_num].wordpair;
+    	target.start(items.time, isi, stimdur);
+    }
+}
+
+proc(items.post_item)
+{
+    if (done == 1) {
+    	log("# ", lsrow, "\t",
+	    block, "\tt=",
+	    itor(target.on_time) / 1000.0, "\n");
+    	done = 2;
+    }
+    else if (done == 2) {
+    	done = 0;
+    }
+    else {
+		//Print
+    	print(lsrow, "\t",
+			block, "\t",
+			items.item_num, "\t\"",
+			list[block, items.item_num].wordpair, "\"\t\"",
+			list[block, items.item_num].statusln, "\"\t",
+			list[block, items.item_num].fondist, "\t\"",
+			list[block, items.item_num].spoon1, "\"\t\"",
+			list[block, items.item_num].spoon2, "\"\t\"",
+			list[block, items.item_num].lexicality, "\"\t\"",
+			list[block, items.item_num].TB, "\"\n");
+	    //Log
+    	log(lsrow, "\t",
+			block, "\t",
+			items.item_num, "\t\"",
+			list[block, items.item_num].wordpair, "\"\t\"",
+			list[block, items.item_num].statusln, "\"\t",
+			list[block, items.item_num].fondist, "\t\"",
+			list[block, items.item_num].spoon1, "\"\t\"",
+			list[block, items.item_num].spoon2, "\"\t\"",
+			list[block, items.item_num].lexicality, "\"\t\"",
+			list[block, items.item_num].TB, "\"\n");
+    }
+}
+
+
+
+//------------------------------------------------------------------------------
+
+event(target.off)
+{
+    items.time = target.off_time;
+    if (done == 2)
+    	items.done();
+    else
+    	items.nextItem();
+}
+
+//------------------------------------------------------------------------------
+
+event(alert.off)
+{
+    if (alldone) finish();
+}
+

@@ -1,0 +1,63 @@
+/******************************************************************************\
+FILE:           participant.zm
+AUTHOR:         Theo Veenker <theo.veenker@beexy.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Provides participant database record field create and check functions.
+
+
+HISTORY:
+2011-08-27 TV   Created as part of the standard Zep modules.
+
+\******************************************************************************/
+
+plugin zep_file;
+
+int[..] PARTICIPANT_CHOSEN_ORDER;
+
+// Creates required participant record fields.
+void create_participant_fields()
+{
+    expdb.participant.add_string_field("ORDER_SOURCE_PPID");
+}
+
+// Checks current values of participant record fields.
+int check_participant_fields()
+{
+    if (!expdb.participant.has_string_field("ORDER_SOURCE_PPID")) return ERROR;
+
+
+    if(expdb.participant.get_string_field("ORDER_SOURCE_PPID") != "")
+        load_participant_order(expdb.participant.get_string_field("ORDER_SOURCE_PPID"));
+    else
+        PARTICIPANT_CHOSEN_ORDER.size = 0;
+
+    return OK;
+}
+
+void load_participant_order(string ppid)
+{
+    println("Loading in order from: " + ppid);
+
+    string filepath = data_dir() + "/orders/" + ppid + ".csv";
+
+    if(file_exists(filepath))
+        PARTICIPANT_CHOSEN_ORDER.load(filepath, true, 1);
+    else
+        println("Warning: could not find order: " + ppid);
+}
+
+void write_participant_order_to_file()
+{
+    string ppid = expdb.participant.id;
+    string filepath = data_dir() + "orders/" + ppid + ".csv";
+
+    if(file_exists(filepath))
+        println("Warning: overwriting order of " + ppid);
+    if(PARTICIPANT_CHOSEN_ORDER.size == 0)
+        println("Warning: exporting empty order");
+    else
+        PARTICIPANT_CHOSEN_ORDER.save(filepath, ppid);
+}

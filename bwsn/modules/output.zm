@@ -1,0 +1,157 @@
+/******************************************************************************\
+FILE:           output.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Defines the formats of output table(s).
+
+
+HISTORY:
+2012-02-08 TV   Created.
+
+\******************************************************************************/
+
+
+// Test phase output table record, defining what is to be logged for
+// each trial.
+
+enum ItemType
+{
+    PRAC,             // practice trials
+    CNDA,             // condition A
+    CNDB,             // condition B
+    FILL,             // fillers
+}
+
+
+
+
+//record FullTrial_TestOutput
+//{
+//   string      exp_id;
+//    string      researcher_id;
+//    string      session_id;
+//    int         trialnum;       // trial number
+//    string      part_id;
+//    int         listnr;
+//    int         setnr;
+//    ItemType    cond;             // item id
+//    string      sentence;       // sentence to read
+//    time         visible_recording_starttime;
+//    time         visible_recording_endtime;
+//
+//    time         invisible_recording_starttime;
+//    time         invisible_recording_endtime;
+//
+//    dur         visible_time;
+//    dur         invisible_time;
+//    int         inv_rt;
+//    int         vis_rt;
+//
+//}
+
+
+record TestOutput
+{
+//    int         id;
+
+// added session number here as first item, requested by Sieb Nooteboom
+    string      session_id;
+
+    int         trialnum;       // trial number
+    int         condition;
+    string      researcher_id;
+
+//  exp_id removed, as requested by Sieb Nooteboom
+//  string      exp_id;
+
+//  string      session_id;
+
+//  participant_id removed, as requested by Sieb Nooteboom 13-03-2014
+//  string      part_id;
+    int         listnr;
+//    ItemType    cond;             // item id
+ 
+    int         OrigNr;
+    int         Set;
+    int         NrSyll;
+    string      conson;
+    int         NrInSet;
+    string      Cond;
+    string      Stimulus;
+    string      vis_WavFilename;
+    string      inv_WavFilename;
+
+    int         List;
+
+
+
+//    string      sentence;  
+// sentence to read
+
+    time         visible_recording_starttime;
+    time         visible_recording_endtime;
+
+    time         invisible_recording_starttime;
+    time         invisible_recording_endtime;
+
+    //dur         visible_time_ms;
+    //dur         invisible_time_ms;
+    int         vis_rt;
+    int         inv_rt;
+
+
+  //  int         diff_vis_time_rt;
+  //  int         diff_inv_time_rt;
+
+}
+
+//FullTrial_TestOutput trialdata;
+
+// Test phase output table.
+TestOutput[..] test_output;
+
+//FullTrial_TestOutput[..] allfields_output;
+
+
+
+// Appends one row of data to test phase output table.
+//void allfields__append(FullTrial_TestOutput data)
+//{
+//    allfields_output.size = allfields_output.size + 1;
+//    allfields_output[allfields_output.size-1] = data;
+//}
+
+
+// Writes test phase output table contents to CSV file and clears the table.
+//void allfields_save()
+//{
+    // Append table to CSV file (create if non-existent). The filename 
+    // format is: <dbname>/<dbnum>/<expname>/ses<sesid>-<tblnum>.csv
+//    allfields_output.append(expdb.experiment.session.table_filename(1), 
+//        "Test phase results");
+//    allfields_output.size = 0;
+//}
+
+//------------------------------------------------------------------------------
+
+
+// Appends one row of data to test phase output table.
+void test_output_append(TestOutput data)
+{
+    test_output.size = test_output.size + 1;
+    test_output[test_output.size-1] = data;
+}
+
+
+// Writes test phase output table contents to CSV file and clears the table.
+void test_output_save()
+{
+    // Append table to CSV file (create if non-existent). The filename 
+    // format is: <dbname>/<dbnum>/<expname>/ses<sesid>-<tblnum>.csv
+    test_output.append(expdb.experiment.session.table_filename(1), 
+        "Test phase results");
+    test_output.size = 0;
+}

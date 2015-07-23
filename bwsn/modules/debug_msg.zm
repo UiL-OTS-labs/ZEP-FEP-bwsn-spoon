@@ -1,0 +1,105 @@
+/******************************************************************************\
+FILE:           session.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+MODIFIED BY:    Alex Manus (UiL-OTS) <A.T.Manus@uu.nl>
+                Christian Straman (Uil-OTS) <C.R.Straman@uu.nl>  jan 20th 2014
+                
+DESCRIPTION:
+
+Session specific initialization.
+
+
+HISTORY:
+2013-01-10 TV       Created.
+2014-01-20 AM/CS    Modified to create directory structure to store trial images
+
+\******************************************************************************/
+
+
+// Flag controlling whether object information and test window contents and
+// object information should be saved. It is set when in preparing mode and
+// the participant id is "nosweat".
+bool DoDebugMsg;
+
+
+// This function is called after group assignment and check out of experiment,
+// researcher, participant and group records, but before the new session has 
+// been created. At this point the database is fully accessible.
+int SetupDebugMsg(bool DoIt)
+{
+    time t;
+    char dsep = '-';
+    char tsep = ':';
+    char dtsep = '_';
+    char zsep = '\x00';
+    int flags = 0;
+ 
+    t = now();
+
+    string MyTimestring =  format(t, flags, dsep, tsep,dtsep, zsep);
+
+
+    if (DoIt)
+    {   
+        DoDebugMsg = DoIt;
+        DebugMsg("--> DebugMessages switched ON\n");
+        DebugMsg("--> "+MyTimestring+"\n");
+
+        DebugMsg("script_name = " + script_name() + "\n");
+        DebugMsg("zep_dir = " + zep_dir() + "\n");
+        DebugMsg("script_dir = " + script_dir() + "\n");
+        DebugMsg("stimuli_dir = " + stimuli_dir() + "\n");
+        DebugMsg("data_dir = " + data_dir() + "\n");
+
+    }
+    else
+    {
+        //DoDebugMsg = true;
+        //DebugMsg("--> DebugMessages switched OFF. (after this)\n");
+        //DebugMsg("--> "+MyTimestring+"\n");
+        DoDebugMsg = DoIt;
+    }
+
+
+    return OK;
+}
+
+
+// This function is called just after the new session has been created. So
+// the new session id is known. At this point the database is still fully 
+// accessible.
+int DebugMsg(string showmethis)
+{
+    //println("entering setup_session() \n");
+    //if (generate_object_info)
+    //   println("generate_object_info is true \n");
+    //else
+    //   println("generate_object_info is false \n");
+    if (DoDebugMsg)
+        println(showmethis);
+    return OK;
+
+}    
+
+
+
+string TimeAsString(time this_one)
+{
+
+    int flags = 0;
+    string this_string;
+    char dsep  = '-';
+    char tsep  = ':';
+    char dtsep = 'T';
+    char zsep = '\x00';
+    //time snap;
+
+    //snap = now();
+
+    // Check if we need to ask a comprehension question.
+
+    this_string = format(this_one, flags, dsep, tsep, dtsep,zsep);
+
+    return (this_string);    
+
+}

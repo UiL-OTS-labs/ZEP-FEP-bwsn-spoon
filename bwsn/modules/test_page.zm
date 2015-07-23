@@ -1,0 +1,685 @@
+/******************************************************************************\
+FILE:           test_page.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Provides a page object to show to the participant during test phase trials.
+It handles presenting the stimulus and recording the participant's response.
+
+
+HISTORY:
+2012-02-08 TV   Created.
+
+\******************************************************************************/
+
+
+Page test_page
+{
+    TestItem    item;           // trial control parameters
+    //Tim recording_time;
+    time RecStart;
+    time RecStop;
+    string WavFilename;
+    int WavFileNr=0;
+    int TrialNrForWav=0;
+
+    init()
+    {
+        DebugMsg("entering: test_page.init \n");       
+
+        fill_pattern_color = TEST_PAGE_COLOR;
+
+    }
+
+
+    on_event:key_press()
+    {
+        DebugMsg("entering: test_page.on_event:keypress \n");       
+
+        // Handle Enter and spacebar.
+        if (input_key == KEY_Return || input_key == ' ')
+        {
+            DebugMsg("received keypress, but ignoring it\n");       
+            response.process_hit(event_time);
+        }
+        else
+            handle_special_key(this, input_key, input_modifiers);
+    }
+
+//=================================================================
+//=================================================================
+
+
+
+    on_event:message()
+    {
+        if (message_sender == control)
+        {
+            // Process button-box message. See setup() below.
+//            println("response via buttonbox \n" );
+            DebugMsg("keypress from buttonbox:\n" );
+
+            //response.process_hit(message_arg, event_time);
+            response.process_hit(event_time);
+
+        }
+        else
+        {
+            DebugMsg("message from other source than eytracker or buttonbox: \n" );
+            ;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+//==================================================================
+//==================================================================
+
+    VerticalLayout layout
+    {
+        init()
+        {
+            DebugMsg("entering: test_page.layout.init \n");       
+
+            spacing = 50;
+            height = 0;     // 0 means as large as possible
+        }
+
+
+        CanvasGadget canvas
+        {
+            init()
+            {
+                DebugMsg("entering: test_page.layout.canvas.init \n");       
+
+                fill_pattern_color = TEST_PAGE_STIMULUS_COLOR;
+                //size = 900, 200;
+                size = 1300, 400;
+
+                //offset_x = 50;
+                //offset_y = 50;
+                offset_x = width / 2;
+                offset_y = height / 2;
+
+            }
+
+
+            CrossShape fixation
+            {
+                init()
+                {
+                    DebugMsg("entering: test_page.layout.canvas.fixation.init \n");       
+
+                    radius = 15;
+                    line_width = 5;
+                    line_pattern_color = color:crimson;
+                    y = TEST_PAGE_STIMULUS_FONT_SIZE / 2;
+                }
+            }
+
+
+            TextShape stimulus
+            {
+                init()
+                {
+                    DebugMsg("entering: test_page.layout.canvas.stimulus.init \n");       
+
+//                    font_family = TEST_PAGE_STIMULUS_FONT_FAMILY;
+//                    font_size = TEST_PAGE_STIMULUS_FONT_SIZE;
+                    font_family = FONT_FAMILY_SANS;
+        
+
+//const real FONT_SIZE_LARGE      = FONT_SIZE_MEDIUM * 1.2;
+//const real FONT_SIZE_XLARGE     = FONT_SIZE_MEDIUM * 1.5;
+//const real FONT_SIZE_XXLARGE    = FONT_SIZE_MEDIUM * 2.0;
+//const real FONT_SIZE_XXXLARGE   = FONT_SIZE_MEDIUM * 3.0;
+//const real FONT_SIZE_SMALL      = FONT_SIZE_MEDIUM * 0.89;
+//const real FONT_SIZE_XSMALL     = FONT_SIZE_MEDIUM * 0.75;
+//const real FONT_SIZE_XXSMALL    = FONT_SIZE_MEDIUM * 0.6;
+
+
+
+
+
+                    font_size = FONT_SIZE_XXXLARGE;
+                    //font_size = FONT_SIZE_XXLARGE;
+
+                    line_pattern_color = TEST_PAGE_STIMULUS_TEXT_COLOR;
+                    //line_width = canvas.width - 100;
+                    line_width = canvas.width ;
+
+                    hor_alignment = ALIGN_CENTER;
+                    ver_alignment = ALIGN_CENTER;
+//----------------------------------------------------------------------
+               }
+            }
+        }
+
+
+//        ButtonGadget next
+//        {
+//            init()
+//            {
+//                DebugMsg("entering: test_page.layout.nextbutton.init \n");       
+//
+//                text = NEXT_BUTTON_TEXT;
+//               text = "next";
+//
+//                font_family = TEST_PAGE_BUTTON_FONT_FAMILY;
+//                font_size = TEST_PAGE_BUTTON_FONT_SIZE;
+//                fill_pattern_color = TEST_PAGE_BUTTON_COLOR;
+//                text_color = TEST_PAGE_BUTTON_TEXT_COLOR;
+//                size = 150, 75;
+//            }
+//
+//
+//            on_event:activate()
+//            {
+//                DebugMsg("entering: test_page.layout.nextbutton.activate \n");       
+//                //signal(experiment.test.trial,  42);
+//                response.process_hit(event_time);
+//            }
+//        }
+
+
+        time start_stimulus(time t, bool vis, bool realtest)
+        {
+            char dsep = '-';
+            char tsep = ':';
+            char dtsep = 'T';
+            char zsep = '\x00';
+            int flags = 0;
+            experiment.NthItem++;
+
+            DebugMsg("entering: test_page.layout.start_stimulus \n");       
+
+
+            string MyTimestring =  format(t, flags, dsep, tsep,dtsep, zsep);
+
+           
+
+//            int listnum = selected_group + 1;
+//            int recordingnum = 1;
+//            string edfname = 
+//                format(expdb.experiment.session.id, 4) + "_" + 
+//                format(listnum, 2) + "_" + 
+//                format(recordingnum, 2);
+
+            // Let eye-tracker open a data file. 
+//            eyetracker.open_data_file(
+//                edfname, 
+//                expdb.experiment.id, 
+//                expdb.researcher.id, 
+//                expdb.participant.id, 
+//                expdb.experiment.session.id, 
+//                listnum, recordingnum);
+//            eyetracker.print_to_data_file("Visual World Experiment");
+
+           string part_id = expdb.participant.id;
+           string exp_id  = expdb.experiment.id; 
+           string researcher_id = expdb.researcher.id; 
+           string session_id = format(expdb.experiment.session.id, 3);
+
+
+            DebugMsg("group_id = " +(selected_group == GRP1 ? "GRP1" : "GRP2") + "\n");
+
+            DebugMsg("participant id = " + part_id + "\n");
+            DebugMsg("experiment_id  = " + exp_id + "\n");
+            DebugMsg("researcher_id  = " + researcher_id + "\n");
+            DebugMsg("session_id     = " + session_id + "\n");
+
+
+            string dir = data_dir() + script_name() + "/";
+            if (!file_exists(dir)) create_dir_tree(dir);
+
+            WavFilename ="";
+
+            if (false)
+            {
+                   WavFilename = dir + "ses-" + 
+                        string(experiment.NthItem) + 
+                        "-" +
+                        "ITEMID=" + 
+                        //string(item.id) + 
+                        "-" + 
+                        (vis ? "Visible" : "Invisible") + 
+                        "-" +
+                        MyTimestring + 
+                 //       "_ListNr_"+ string(experiment.test.UseListNr)+"_"+
+                        "-test.wav";
+            }
+            else
+            {            
+// Proposal Hugo Quene, 05-02-2014:
+// P01L2S01B_vis.wav     (participant 1, lijst 2, set 1, cond B, visible)
+    
+                   WavFileNr++;
+// part id is string , cannot be numeric, so P + id(=01)
+// becomes part_id = P01                   
+                   WavFilename = dir +
+                        //"F" + format(WavFileNr,3)+ 
+                        //"P" + part_id + 
+						session_id + "-" +
+                        part_id + "-" +
+                        (realtest ? "T" : "P") + "-" +    
+                        "T" + format(TrialNrForWav,3)+
+                        "N" + format(item.OrigNr,3) +
+                        "L" + string(experiment.UseListNr) + 
+                        //"S" + string(item.Set) +   // SetNr+
+                        "S" + format(item.Set,2) +   // SetNr+
+
+                        item.Cond + 
+                        //"-" + (vis ? "vis" : "inv") + 
+                        "-" + (vis ? "A" : "B") + 
+                        ".wav";
+             }
+                
+
+             DebugMsg("readsent.zp: beginning soundcapture for this sentence \n");       
+            //sound_capture.rec(fn, experiment.reference_time + 100ms, 0s);
+            //recording_time = experiment.reference_time;
+
+            //sound_capture.rec(fn, experiment.reference_time, 30s);
+            //sound_capture.rec(fn, experiment.reference_time, 0s);
+
+             // t = now() + 1 sec ?!
+
+            DebugMsg("just before soundcapture.rec: now()= " + string( now() ) + "\n" );       
+            DebugMsg("just before soundcapture.rec:    t = " + string(t) + "\n" );       
+            //RecStart = now();
+            sound_capture.rec(WavFilename, t, 0s);
+            RecStart = now();
+
+            DebugMsg("wav file name:" + WavFilename + "\n" );
+
+
+            //canvas.stimulus.text = item.sentence;
+            //canvas.stimulus.is_visible = true;
+
+            // Prepare stimulus presentation object.
+            if (vis)
+            {
+                DebugMsg("start_stimulus: showing sentence \n");       
+                //canvas.stimulus.text = item.sentence;
+                canvas.stimulus.text = item.Stimulus;
+
+                canvas.stimulus.is_visible = true;
+
+            }
+            else
+            {
+                DebugMsg("start_stimulus: not showing sentence \n");       
+                canvas.stimulus.text = "";
+                canvas.stimulus.is_visible = false;
+
+            }
+
+            if (false)
+            {
+                // Start fixation cross.
+                canvas.fixation.start(t, FIXATION_DURATION);
+                //canvas.fixation.start(t, 0ms);
+
+                time fixoffset = canvas.fixation.expected_finish_time;
+                // Start stimulus at fixation offset.
+                canvas.stimulus.start(fixoffset);
+                //canvas.stimulus.start(now(), RESPONSE_DURATION);
+
+
+                // Return stimulus onset time.
+                return canvas.stimulus.expected_start_time;
+                //return (now());
+            }
+
+            canvas.stimulus.start(now());
+            //canvas.stimulus.start(now(), RESPONSE_DURATION);
+            // Return stimulus onset time.
+            return (now());
+
+        }
+
+
+        void reset()
+        {
+         //   println("entering: test_page.layout.reset \n");       
+
+            full_abort();
+
+            canvas.stimulus.is_visible = false;
+        }
+    }
+
+//================================
+
+
+//================================
+//================================    
+
+
+    SoundChain beeper
+    {
+        // Sound source/producer object.
+        BeepGenerator beep {}
+
+
+        // Sound sink/consumer object.
+        SoundPlayback playback {}
+
+
+      time play(time t)
+        {
+            //println("entering: beeper.play \n");      
+             
+            abort();
+
+            playback.device = sound_output_device;
+            beep.num_channels  = 2;
+            beep.channel_rotation = -180;
+            beep.content_duration = 100ms;
+            beep.frequency = 1000;
+            beep.set_scaling(0.5);
+            beep.fade_in_duration = 1ms;
+            beep.fade_out_duration = 1ms;
+
+            start(t);
+
+            return expected_finish_time;
+        }
+    }
+
+
+
+    Response response
+    {
+        // Response data.
+        int     value;
+        int     rt;             // response time [ms]
+        int     correct;
+
+        void clear()
+        {
+            value =-1;
+            rt = -9999;
+            correct = -1;
+            DebugMsg("entering: test_page.response.clear \n");       
+
+        }
+
+
+        void process_hit(time t)
+        {
+            DebugMsg("entering: test_page.response.process_hit \n");       
+
+            HitType validity = hit(t);
+
+            // Accept the first hit in the response interval and end the 
+            // response interval.
+
+//======================================
+
+            DebugMsg("readsent.zp: stopping soundcapture for this sentence \n");       
+
+            DebugMsg("just before soundcapture.abort: now()= " + string( now() ) + "\n" );       
+            DebugMsg("just before soundcapture.abort: t = " + string(t) + "\n" );       
+
+            sound_capture.abort();
+            RecStop = now();
+
+
+//======================================
+
+
+            if (validity == HIT_VALID)
+            {
+                DebugMsg(" detected user action: validity == HIT_VALID \n");       
+
+                rt = int(reaction_time(0));                
+
+                DebugMsg(" HIT_VALID: rt = " + string(rt) + " ms \n" );       
+                
+                ignore_remaining_hits();
+        
+                stop();
+            }
+            else if (validity == HIT_TOO_EARLY || validity == HIT_TOO_LATE)
+            {
+
+                if (validity == HIT_TOO_EARLY)       
+                    DebugMsg(" detected user action: validity == HIT_TOO_EARLY\n");
+                else
+                    DebugMsg(" detected user action: validity == HIT_TOO_LATE\n");
+
+                // False alarm. Deal with this if desired.
+            }
+        }
+
+
+        on_event:finish()
+        {
+            DebugMsg("entering: test_page.response.event:finish \n");       
+    
+            real correctness = 0;
+            if (num_valid_hits > 0) correctness = correct ? 1 : -1;
+
+           // if (!test_page_overlay.start_feedback(this, correctness, 
+           //         FEEDBACK_DURATION)) 
+                done(CONTINUE);
+
+            // testing code 30-01-2014
+            //control.button_box.disable_buttons();
+            //control.button_box.enable_button(0, 1); // button 0 means L(1)
+            //control.button_box.enable_button(1, 2); // button 1 means R(2)
+
+      //      done(CONTINUE);
+        }
+    }
+
+
+
+    // Aborts any ongoing activity on this page and signals the initiator
+    // of the trial that we're done.
+    void done(int msgid)
+    {
+        // Just in case; abort presentation if still active.
+     //   println("entering: test_page.done \n");       
+
+        layout.reset();
+
+        signal_target(msgid);   // tell caller we're done
+        target = null;
+
+        control.clear_status();
+    }
+
+
+    //==========================================================================
+
+
+    // Performs preparatory work required before using this page.
+    void setup(int ntrials=-1, bool pr=false)
+    {
+        DebugMsg("entering: test_page.setup \n");       
+
+        
+
+        test_page_overlay.setup(this);
+
+        // Show or hide prompt.
+        test_page_overlay.show_prompt(pr ? 
+            "read aloud each sentence" : "");
+
+        // Enable or disable the progress bar.
+        test_page_overlay.show_progress_bar(ntrials);   // disabled if < 0
+
+        control.target = this;
+        control.button_box.disable_buttons();
+        control.button_box.enable_all_buttons(0);
+
+    }
+
+
+    // Performs cleaning up if necessary.
+    void cleanup()
+    {
+  
+       // println("entering: test_page.cleanup \n");       
+
+        TestOutput output;
+        //output.trialnum = experiment.test.cycle + 1;
+   //     output.trialnum = experiment.test.DeEchteTest.cycle + 1;
+
+        //output.id = item.id;
+        //output.sentence = escape_specials(item.sentence);
+        test_output_append(output);
+
+
+
+        test_page_overlay.cleanup();
+
+        control.button_box.disable_buttons();
+        control.target = null;
+
+    }
+
+
+  
+   void CombinedAction(Object caller, TestItem it, time tref, int count=-1, bool visible = true, bool realtest = true)
+   {
+        // Save passed trial control parameters.
+        int mycount;
+        DebugMsg("entering: test_page.SecondAction \n");       
+        
+        TrialNrForWav = count+1;
+        DebugMsg("CombinedAction: TrialNrForWav=" + string(TrialNrForWav) + "\n");       
+
+        item = it;
+//        control.button_box.open();    
+
+
+      //  TestOutput output;
+      //  output.trialnum = count;
+       // output.id = item.id;
+        //output.sentence = escape_specials(item.sentence);
+        //test_output_append(output);
+
+
+//        control.set_status(
+//            string(item.id) + "  " + 
+//            escape_specials(item.sentence));
+
+//==============================================================================
+//==============================================================================
+//       odd counts: FIRST PARTS: SENTENCE VISIBLE
+//       even counts: SECOND PARTS: SENTENCE INVISIBLE (showing empty sentence)
+
+//==============================================================================
+
+        // Show this page (if not yet done) and make tref the trial start time.
+        if (visible)
+        {
+           test_page_overlay.update_progress_bar(count);
+           //test_page_overlay.show_prompt("lees onderstaande woorden hardop voor bij de microfoon \nen druk op de button als je klaar bent" );
+           test_page_overlay.show_prompt("");
+
+        }
+        else
+        {
+            //test_page_overlay.show_prompt("spreek de woorden nu uit het hoofd nogmaals 3 keer hardop uit, zo vlot mogelijk uit \n en druk op de blauwe button als je klaar bent" );
+            test_page_overlay.show_prompt("");
+
+        }
+        tref = test_window1.show_test_page(this, tref + INTERTRIAL_INTERVAL);
+
+        // Reset response data.
+        response.clear();
+
+//        string dir = data_dir() + script_name() + "/";
+//        if (!file_exists(dir)) create_dir_tree(dir);
+//        string fn = dir + "ses-" + 
+
+//        format(expdb.experiment.session.id, 4) + "-test.wav";
+//        println("readsent.zp: beginning soundcapture for this-sentence \n");       
+//        sound_capture.rec(fn, experiment.reference_time + 100ms, 0s);
+
+
+        // Start fixation symbol and stimulus.
+        DebugMsg("entering: test_page.action start_stimulus \n");       
+
+       // time stimonset = layout.start_stimulus(tref, false);
+
+        time stimonset = layout.start_stimulus(tref, visible, realtest);
+
+        // Start beep at stimulus onset.
+        beeper.play(stimonset);
+
+//====================================================
+//====================================================
+        char dsep = '-';
+        char tsep = ':';
+        char dtsep = 'T';
+        char zsep = '\x00';
+        int flags = 0;
+
+        string MyTimestring =  format(stimonset, flags, dsep, tsep,dtsep, zsep);
+
+
+
+
+//====================================================
+//====================================================
+
+
+        // Response interval starts at stimulus onset. Timeout after 
+        // RESPONSE_DURATION unless this duration is 0s or less.
+        DebugMsg("entering: test_page.action response_start \n");       
+        MyTimestring =  format(tref, flags, dsep, tsep,dtsep, zsep);
+
+        // time in the past!!
+        //response.start(stimonset, RESPONSE_DURATION);
+        DebugMsg("response.start: tref = " + MyTimestring +"\n");   
+        MyTimestring =  format(stimonset, flags, dsep, tsep,dtsep, zsep);
+
+        DebugMsg("response.start: stimonet = " + MyTimestring +"\n");       
+
+        //response.start(tref, RESPONSE_DURATION);
+
+//        if (DoDebugMsg)
+//        {   
+//            response.start(stimonset, 200ms);
+//
+//        }
+//       else
+//        {
+            response.start(stimonset, RESPONSE_DURATION);
+//        }   
+
+
+        // Update progress counter (if enabled).
+//        if (!visible)
+//            test_page_overlay.update_progress_bar(count);
+
+
+        // Update status line on control window. Cleared in done() above.
+//        control.set_status(
+//            string(item.id) + "  " + 
+//            escape_specials(item.sentence));
+//==============================================================================
+//==============================================================================
+
+        // Remember who to signal when the trial is over.
+        target = caller;
+    }
+
+
+}

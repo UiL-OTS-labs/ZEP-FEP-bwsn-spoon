@@ -1,0 +1,50 @@
+/******************************************************************************\
+FILE:           grouping.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Defines groups and handles participant group assignment.
+
+
+HISTORY:
+2012-09-13 TV   Created.
+
+\******************************************************************************/
+
+
+// Symbolic definition of groups.
+enum TestGroup
+{
+    GRP1,
+    GRP2
+//    GRP3,
+//    GRP4,
+}
+
+
+// Assigns participant to a group.
+//int assign_participant_to_group()
+//{
+    // The group to assign to depends on the numerical part in the 
+    // participant-id. If the participant-id has no numerical part a
+    // group will be selected at random.
+//    if (select_group_from_participant_id() != OK)
+//        select_group_random();
+    
+//    return OK;
+//}
+
+
+int assign_participant_to_group()
+{
+//    if (expdb.participant.id == "P1" || expdb.participant.id == "p1" )
+//        selected_group = GRP1;
+//    else if (expdb.participant.id == "P2" || expdb.participant.id == "p2")
+//        selected_group = GRP2;
+//    else
+//        DebugMsg("Problem: cannot handle participant idś other than P1 or P2\n");
+ 
+    return OK;
+}

@@ -1,0 +1,88 @@
+/******************************************************************************\
+FILE:           stimuli.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Defines the formats of item table(s) and provides the actual content of
+the item table(s) i.e. stimulus information.
+
+HISTORY:
+2012-02-08 TV   Created.
+
+\******************************************************************************/
+
+
+// Item record used for the test phase item table.
+//record TestItem
+//{
+//    int         id;             // item id
+//    string      sentence;       // sentence to read
+//}
+
+// new format
+//    OrigNr  SET   NRSYLL  CONSON    NR IN SET   COND    STIMULUS                  LIST
+//    { 1,      1,    1,      "w/r+p",  1,          "B",    "wok rapper roeper wal",  1     },
+
+record TestItem
+{
+//    int         id;             // item id
+//    string      sentence;       // sentence to read
+
+    int         OrigNr;
+    int         Set;
+    int         NrSyll;
+    string      Cond;
+    string      Stimulus;
+    int         List;
+}
+
+TestItem[..] ItemList1;
+
+TestItem[..] ItemList2;
+
+TestItem[..] test_prac_items;
+
+// Loads item table(s) from CSV file(s) in the stimuli folder.
+int load_stimuli()
+{
+    // Uncomment relevant parts below to load stimuli from CSV file.
+ 
+    int err;
+ 
+//    // Load data into prac_items table.
+//    err = prac_items.load(stimuli_dir() + "prac_items.csv",
+//        true,           // if true, file contains a header row
+//        1);             // number of lines to skip before header and data
+//    if (err) return err;
+ 
+ 
+    // Load data into test_items table.
+    err = ItemList1.load(stimuli_dir() + "ItemList1.csv",
+        true,           // if true, file contains a header row
+        1);             // number of lines to skip before header and data
+    if (err) return err;
+    
+    // Load data into test_items table.
+    err = ItemList2.load(stimuli_dir() + "ItemList2.csv",
+        true,           // if true, file contains a header row
+        1);             // number of lines to skip before header and data
+    if (err) return err;
+    
+    // Load data into test_items table.
+    err = test_prac_items.load(stimuli_dir() + "test_prac_items.csv",
+        true,           // if true, file contains a header row
+        1);             // number of lines to skip before header and data
+    if (err) return err;
+ 
+    return OK;
+}
+
+
+
+
+
+
+
+

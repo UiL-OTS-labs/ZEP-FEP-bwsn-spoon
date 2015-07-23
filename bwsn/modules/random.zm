@@ -1,0 +1,121 @@
+/******************************************************************************\
+FILE:           random.zm
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     -
+
+DESCRIPTION:
+
+Item table randomization functions.
+
+
+HISTORY:
+2012-02-08 TV   Created.
+
+\******************************************************************************/
+
+
+// Shuffles test_items table (no restrictions on item order).
+int shuffle_test_items()
+{
+    if (selected_group == GRP2)
+        process_list(ItemList2);
+    else
+        process_list(ItemList1);
+
+    return OK;
+}
+
+void process_list(TestItem[] test_items)
+{
+    if(order_was_loaded())
+        put_list_in_order(test_items);
+    else
+        test_items.shuffle(0, -1);
+
+    output_order(test_items);
+}
+
+bool order_was_loaded()
+{
+    return PARTICIPANT_CHOSEN_ORDER.size != 0;
+}
+
+int put_list_in_order(TestItem[] test_items)
+{
+    int[] target_order = PARTICIPANT_CHOSEN_ORDER;
+    
+    if(target_order.size != test_items.size)
+    {
+        println("Error: selected order was of different length!");
+        return ERROR;
+    }
+    
+    qsort_on_OriginNr(test_items,1, test_items.size-1); //just to be sure.
+
+    TestItem[..] source_copy;
+    copy_array_to_array(test_items, source_copy);
+
+    int index = 0;
+    while(index < test_items.size)
+    {
+        int target_orign_nr = target_order[index];
+        int index_of_origin_nr_if_sorted = target_orign_nr-1;
+
+        test_items[index] = source_copy[index_of_origin_nr_if_sorted];
+        
+        index++;
+    }
+
+    return OK;
+}
+
+void copy_array_to_array(TestItem[] coppied, TestItem[] copy)
+{
+    copy.size = coppied.size;
+    
+    int index = 0;
+    while(index < copy.size)
+    {
+        copy[index] = coppied[index];
+        index++;
+    }
+}
+
+void qsort_on_OriginNr(TestItem[] array, int m, int n)
+{
+   if (m < n) 
+   {
+       int k = (m + n) / 2;
+ 
+       array.swap(m, k);
+ 
+       int key = array[m].OrigNr;
+       int i = m + 1;
+       int j = n;
+       while (i <= j)
+       {
+           while ((i <= n) && (array[i].OrigNr <= key)) i++;
+           while ((j >= m) && (array[j].OrigNr >  key)) j--;
+           if (i < j) array.swap(i, j);
+       }
+       array.swap(m, j);
+ 
+       qsort_on_OriginNr(array, m, j - 1);
+       qsort_on_OriginNr(array, j + 1, n);
+   }
+}
+
+void output_order(TestItem[] test_items)
+{
+    PARTICIPANT_CHOSEN_ORDER.size = test_items.size;
+    int index = 0;
+
+    while(index < test_items.size)
+    {
+        PARTICIPANT_CHOSEN_ORDER[index] = test_items[index].OrigNr;
+        index++;
+    }
+
+    write_participant_order_to_file();
+}
+

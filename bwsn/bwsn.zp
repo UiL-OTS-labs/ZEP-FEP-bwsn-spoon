@@ -1,0 +1,789 @@
+/******************************************************************************\
+FILE:           speakwwoprompt.zp
+AUTHOR:         Theo Veenker (UiL-OTS) <T.J.G.Veenker@uu.nl>
+ADAPTED BY:     Chrisian Straman (UiL-OTS) <C.R.Straman.uu.nl>
+                Alex Manus
+
+EXPERIMENT:     Read Speech Eliciting
+
+DESCRIPTION:
+
+Purpose of this experiment is to elicit speech from participant by
+having them read sentences. For each trial a sentence is presented
+on the screen. Participant's task is to read aloud the sentence. 
+Self-paced. Output: audio recording.
+
+The script produces a beep at onset of visual stimulus. Experimenter 
+should make sure the participant's speech signal and the beep signal 
+are both fed into the computer.
+
+This implementation can also be used for sentence completion tasks
+with oral response. Requires adapting instructions and stimuli.
+
+
+Global structure of experiment:
+
+  - welcome
+
+  - instructions
+
+  - practice phase (... trials)
+      trial
+
+  - pause
+
+  - test phase (... trials)
+      trial
+
+  - thankyou
+
+
+HISTORY:
+2012-02-08 TV   Created.
+2014-01-21 CS/AM Adapted: 
+2014-02-18 CS finished first version 
+2014-03-10 CS first version to be handed out.
+
+//  alle tekst in het Nederlands
+//  de aanwas van nieuwe opnamen (wav files) in de data/speakwwoprompt/ directory
+//  kan live gevolgede worden door: 
+// cd data/speakwwoprompt<enter> 
+// watch ls -lt<enter>
+// zet teminal-venster vrij breed!!
+
+
+\******************************************************************************/
+
+requires 1.6;
+
+plugin zep_file;
+import debug_msg;
+import std_windows1;
+import std_texts_nl;
+import std_entry_page1;
+import std_exit_page1;
+import std_pause_page;
+//import std_blank_page;
+import std_sound_output_device;
+import std_sound_input_device;
+import std_sound_capture;
+
+import test_page;
+//import test_page_blind;
+
+
+Experiment experiment
+{
+    int UseListNr = -1;
+
+    int NthItem=0;
+
+    on_event:entry()
+    {        
+		if(load_stimuli()!=OK) 
+			terminate;
+        control.button_box.open();    
+        control.button_box.enable_all_buttons(CONTINUE);
+
+        SetupDebugMsg(false);        
+        DebugMsg("entering: experiment on_event:entry, enabling buttonbox \n");       
+
+        show_test_windows();
+//        control.button_box.enable_button(0, 1); // button 0 means L(1)
+//        control.button_box.enable_button(1, 2); // button 1 means R(2)
+
+    }
+
+
+    on_event:message()
+    {
+        // On Ctrl+F4 unconditionally jump to thankyou phase.
+        if (message_sender == control)
+        {            
+
+            if (message_arg == SYS_STOP)
+            {
+                control.mark_experiment_aborted();
+                thankyou.enter();
+            }
+            else
+            {
+        
+        // Process button-box message. See setup() below.
+        //         println("response via buttonbox \n" );
+        //           DebugMsg("message from buttonbox: \n" );
+
+        // test_page.response.process_hit(message_arg, event_time);
+        //                 test_page.response.process_hit( event_time);
+
+            }
+
+        }   
+
+    }
+
+
+
+//    on_event:exit()
+//    {
+       // println("entering: experiment on_event:exit \n");       
+
+//    }
+
+
+    Part welcome
+    {
+        on_event:entry()
+        {
+            DebugMsg("entering: experiment.welcome on_event:entry \n");       
+
+            entry_page.set_text(WELCOME_TEXT);
+            entry_page.action(this, 0s);
+        }
+
+//        on_event:exit()
+//        {
+//            DebugMsg("entering: experiment.welcome on_event:exit \n");       
+
+//        }    
+    }
+
+
+    Part instructions
+    {
+        on_event:entry()
+        {
+            DebugMsg("entering: experiment.part.instructions: on_event:entry \n");       
+
+
+//Beste proefpersoon,
+//
+//Hartelijk dank voor je deelname aan dit experiment.
+//
+//Je krijgt zometeen vier woorden te zien op het scherm.
+//Lees die reeks van vier woorden hardop voor, en doe dat zo snel
+//mogelijk. Je moet de gehele reeks van woorden drie maal herhalen.
+//
+//Druk dan op de blauwe knop. De woorden zullen daardoor verdwijnen van
+//het scherm. Je moet de reeks van vier woorden dan nogmaals uitspreken,
+//zo snel mogelijk, maar dan uit het hoofd. Herhaal de gehele reeks van
+//woorden weer drie maal.
+//
+//Druk daarna weer op de blauwe knop. Je krijgt dan de volgende reeks op
+//het scherm te zien.
+//
+//In totaal krijg je 96 reeksen van woorden gepresenteerd. Onder in het
+//scherm zie je hoe ver je bent in het experiment.
+//
+//We beginnen met een oefening.
+//Druk op de blauwe knop om de oefening te starten.
+
+
+
+            pause_page.set_text(
+                "<b>Beste proefpersoon,</b>\n"
+                "\n"
+                "Hartelijk dank voor je deelname aan dit experiment.\n"
+                "\n"
+                "Je krijgt zometeen vier woorden te zien op het scherm.\n"
+                "Lees die reeks van vier woorden hardop voor, en doe dat zo snel\n"
+                "mogelijk. Je moet de gehele reeks van woorden drie maal herhalen.\n"
+                "\n" 
+                "Druk dan op de blauwe knop. De woorden zullen daardoor verdwijnen\n"
+                "van het scherm. Je moet de reeks van vier woorden dan nogmaals uitspreken, "
+                "zo snel mogelijk, maar dan uit het hoofd. Herhaal de gehele reeks van "
+                "woorden weer drie maal.\n"
+                "\n"
+                "Druk daarna weer op de blauwe knop. Je krijgt dan de volgende reeks op "
+                "het scherm te zien.\n"
+                "\n"
+                "In totaal krijg je 96 reeksen van woorden gepresenteerd. Onder in het "
+                "scherm zie je hoe ver je bent in het experiment.\n"  
+                "\n"
+                "We beginnen met een oefening.\n"
+                " \n"
+                "<i>Druk op de blauwe knop om de oefening te starten.</i>", 
+                true);
+
+
+
+            control.button_box.enable_all_buttons(CONTINUE);
+
+            pause_page.action(this);
+        }
+
+//        on_event:exit()
+//        {
+//            DebugMsg("entering: experiment.part.instructions: on_event:exit \n");       
+//
+//        }
+    }
+
+
+    Block practice
+    {
+        TestItem        item;   // current item
+
+        time start_t; 
+        time end_t;
+        time snap;
+        time snap2;    
+        
+        TestOutput output;
+
+        dur speaking_duration;
+
+
+        on_event:entry()
+        {
+            DebugMsg("entering: block practice: on_event:entry \n");       
+//            control.button_box.enable_all_buttons(CONTINUE);
+
+            // Randomize test items table.
+            if (shuffle_test_items() != OK) terminate;
+
+            num_cycles = test_prac_items.size;
+            DebugMsg("numcyc:" + string(num_cycles));
+
+            // Prepare test page: progress bar and prompt enabled.
+            test_page::test_page.setup(num_cycles, true);
+
+            //
+//selected_group = GRP1;
+
+            if (selected_group == GRP2)
+            {
+                UseListNr = 2;
+                DebugMsg("Group 2 selected (GRP2) which selects List: " + string(UseListNr)+ " \n");       
+            
+            }
+            else
+            {
+                UseListNr = 1;
+                DebugMsg("Group 1 selected (GRP1) which selects List: " + string(UseListNr)+ " \n");       
+            }
+
+
+        }
+
+
+        on_event:exit()
+        {
+        //    println("entering: block practice: on_event:exit \n");       
+
+            test_page::test_page.cleanup();
+
+        }
+
+
+        Trial trial
+        {
+            on_event:entry()
+            {
+                DebugMsg("Enter Trial");
+                item = test_prac_items[practice.cycle];
+
+
+
+            }
+
+ //           on_event:exit()
+ //           {
+                //println("practice.trial on_event:exit()");
+ //           }
+
+            SubTrial RecordWithOnScreenSentence
+            {
+                on_event:entry()
+                {
+                    start_t = now();
+                    output.trialnum = practice.cycle;
+  
+                    DebugMsg("readsent.zp: trial subtrial RecordWithOnScreenSentence \n");       
+                    control.button_box.enable_all_buttons(CONTINUE);
+
+                    //item = test_prac_items[practice.cycle];
+                    //test_page::test_page.FirstAction(this, item, reference_time, practice.cycle);
+                    test_page::test_page.CombinedAction(this, item, reference_time, practice.cycle, true,false);
+
+                }
+
+//                on_event:exit()
+//                {
+//                    end_t = now();
+//                    speaking_duration = end_t- start_t;
+//                    DebugMsg("practice:->  responsetime with words on screen: ");
+//                    DebugMsg(string(speaking_duration));
+//                    DebugMsg("\n");
+//                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+//       
+//                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+//                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+//
+//                }
+
+//=============
+
+                on_event:exit()
+                {
+                    end_t = now();
+                    speaking_duration = end_t- start_t;
+                    DebugMsg("practice:->  responsetime with words on screen: ");
+                    DebugMsg(format(speaking_duration));
+                    DebugMsg("\n");
+
+                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+
+                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+    
+                    //output.id = item.id;
+                    //output.sentence = "";  
+                    output.OrigNr = item.OrigNr;
+                    output.Set = item.Set;
+                    output.NrSyll = item.NrSyll;
+
+                    output.Cond = item.Cond;
+                    output.List = item.List;
+            //        output.visible_time_ms = speaking_duration;
+                    output.listnr = UseListNr;
+
+                    string Word_1 = token(item.Stimulus, " ", 0, 0);
+                    string Word_2 = token(item.Stimulus, " ", 1, 0);
+                    string Word_3 = token(item.Stimulus, " ", 2, 0);
+                    string Word_4 = token(item.Stimulus, " ", 3, 0);
+
+                    output.Stimulus = Word_1 + "-" + Word_2 + "-" + Word_3 + "-" + Word_4;
+                    
+                    DebugMsg("storing Stimulus:" + output.Stimulus + "\n");    
+
+                    //output.visible_recording_starttime = start_t;
+                    //output.visible_recording_endtime = end_t;
+
+                    output.vis_WavFilename = test_page.WavFilename;
+                    DebugMsg("storing vis_WavFilename:" + output.vis_WavFilename +"\n");    
+
+                    output.visible_recording_starttime = test_page.RecStart;                  
+                    DebugMsg("storing visible_recording_starttime=" + string(test_page.RecStart) +"\n");    
+
+                    output.visible_recording_endtime   = test_page.RecStop;  
+                    DebugMsg("storing visible_recording_endtime=" + string(test_page.RecStop) +"\n");    
+
+
+                    DebugMsg("storing vis_rt=" + string(test_page.response.rt) +"\n");    
+                    output.vis_rt = test_page.response.rt;
+                    
+                    //test_output_append(output);
+
+                }
+  
+
+
+
+
+
+
+//==============
+            }
+
+
+
+            SubTrial RecordWithoutOnScreenSentence
+            {
+                on_event:entry()
+                {
+                    control.button_box.enable_all_buttons(CONTINUE);
+
+                    start_t = now();
+
+                    DebugMsg("readsent.zp: trial subtrial RecordWithoutOnScreenSentence \n");       
+
+                    //item = test_prac_items[practice.cycle];
+                    //test_page::test_page.SecondAction(this, item, reference_time, practice.cycle);
+                    test_page::test_page.CombinedAction(this, item, reference_time, practice.cycle, false,false);
+                }
+
+//                on_event:exit()
+//                {
+//                    end_t = now();
+//                    speaking_duration = end_t- start_t;
+//                    DebugMsg("practice:->  responsetime without words on screen: ");
+//                    DebugMsg(format(speaking_duration));
+//                    DebugMsg("\n");
+//
+//                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+//                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+//                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+//
+//                }
+//=========================
+                on_event:exit()
+                {
+                    end_t = now();
+                    speaking_duration = end_t- start_t;
+                    DebugMsg("practice:->  responsetime without words on screen: ");
+                    DebugMsg(format(speaking_duration));
+                    DebugMsg("\n");
+
+                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+    
+                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+    
+              //      TestOutput output;
+                    //output.invisible_time_ms = speaking_duration;
+                    output.listnr = UseListNr;
+
+                    //output.invisible_recording_starttime = start_t;
+                    //output.invisible_recording_endtime = end_t;
+
+                    output.invisible_recording_starttime = test_page.RecStart; 
+                    DebugMsg("storing invisible_recording_starttime=" + string(test_page.RecStart) +"\n");    
+
+                    output.invisible_recording_endtime   = test_page.RecStop;                    
+
+
+                    output.inv_WavFilename = test_page.WavFilename;
+                    DebugMsg("storing inv_WavFilename:" + output.inv_WavFilename +"\n");    
+
+
+                    DebugMsg("storing invisible_recording_endtime=" + string(test_page.RecStop) +"\n");    
+
+
+                    DebugMsg("storing inv_rt=" + string(test_page.response.rt) +"\n");    
+                    output.inv_rt = test_page.response.rt;
+                    
+//--------------------------------------------------------------
+                    //removed from csv, as requested bij Sieb Nooteboom, 13-03-2014
+                    //output.exp_id  = expdb.experiment.id; 
+
+                    output.researcher_id = expdb.researcher.id; 
+                    output.session_id = format(expdb.experiment.session.id, 4);
+
+                    //removed from csv, as requested bij Sieb Nooteboom, 13-03-2014
+                    //output.part_id = expdb.participant.id;
+
+//--------------------------------------------------------------                    
+                    test_output_append(output);
+
+                }
+
+//=========================
+            }
+        
+        }
+
+    } // end of practice block
+
+
+
+
+
+
+    Part instructions2
+    {
+        on_event:entry()
+        {
+           DebugMsg("entering: experiment.part.instructions: on_event:entry \n");       
+
+//            pause_page.set_text_size(1000, 600);
+
+           pause_page.set_text("Eind van het oefengedeelte.\n"
+            "\n"
+            "Als u nog vragen heeft, roep dan nu de onderzoeker\n"
+            "of: \n"
+            "<i>druk op het blauwe knopje om de proef te starten</i>\n", 
+            true);
+           pause_page.action(this);
+           control.button_box.enable_all_buttons(CONTINUE);
+        }
+
+    }
+
+    Block test
+    {
+        TestItem        item;   // current item
+        time start_t; 
+        time end_t;
+        time snap;
+        time snap2;    
+
+
+        dur speaking_duration;
+
+        on_event:entry()
+        {
+            DebugMsg("entering: block test: on_event_entry \n");       
+    
+
+//           num_cycles = test_items.size;
+//            num_cycles = 3;
+
+
+            // Prepare test page: progress bar enabled, prompt disabled.
+            if (selected_group == GRP2)
+            {
+                UseListNr = 2;
+                DebugMsg("Group 2 selected (GRP2) which selects List: " + string(UseListNr)+ " \n");       
+
+                num_cycles = ItemList2.size;
+            
+//           num_cycles = test_items.size;
+
+            }
+            else
+            {
+                UseListNr = 1;
+                num_cycles = ItemList1.size;
+
+                DebugMsg("Group 1 selected (GRP1) which selects List: " + string(UseListNr)+ " \n");       
+            }
+
+            test_page::test_page.setup(num_cycles, false);
+
+
+        }
+
+
+        on_event:exit()
+        {
+           // println("entering: block test: on_event_exit \n");       
+
+            // Stop audio recording.
+            //println("readsent.zp: stopping soundcapture for practice sentence \n");       
+
+            sound_capture.abort();
+
+            test_page::test_page.cleanup();
+
+            // Save test phase output table as CSV file.
+
+            // okay-ed 10-02-14:
+            test_output_save();
+
+        }
+
+
+
+
+
+
+
+        Trial TheRealTest
+        {
+
+            // define it HERE instead of local to each trialpart, in order to avoid
+            // clearing fields from subtrial1 in subtrial2
+            // 
+
+            TestOutput output;
+
+            on_event:entry()
+            {
+                DebugMsg("readsent.zp: TheRealTest entry \n");       
+
+                if (UseListNr ==1)
+                {
+                    item = ItemList1[test.cycle];
+                }
+                else
+                {
+                    item = ItemList2[test.cycle];
+                }
+
+            }
+
+//            on_event:exit()
+//            {
+
+                //println("readsent.zp: TheRealTest on_event:exit \n");       
+            
+//            }
+
+                
+            SubTrial RecordWithOnScreenSentence
+            {
+                on_event:entry()
+                {
+                    control.button_box.enable_all_buttons(CONTINUE);
+
+                    DebugMsg("readsent.zp: TheRealTest subtrial RecordWithOnScreenSentence \n");       
+                    start_t = now();
+
+                    //test_page::test_page.FirstAction(this, item, reference_time, test.cycle);
+
+                    output.trialnum = test.cycle;
+                    test_page::test_page.CombinedAction(this, item, reference_time, test.cycle,true,true);
+
+
+                }
+
+                on_event:exit()
+                {
+                    end_t = now();
+                    speaking_duration = end_t- start_t;
+                    DebugMsg("exit event for subtrial 1: responsetime with words on screen: ");
+                    DebugMsg(format(speaking_duration));
+                    DebugMsg("\n");
+
+                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+
+                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+    
+                    //output.id = item.id;
+                    //output.sentence = "";  
+                    output.OrigNr = item.OrigNr;
+                    output.Set = item.Set;
+                    output.NrSyll = item.NrSyll;
+
+                    output.Cond = item.Cond;
+                    output.List = item.List;
+            //        output.visible_time_ms = speaking_duration;
+                    output.listnr = UseListNr;
+
+                    string Word_1 = token(item.Stimulus, " ", 0, 0);
+                    string Word_2 = token(item.Stimulus, " ", 1, 0);
+                    string Word_3 = token(item.Stimulus, " ", 2, 0);
+                    string Word_4 = token(item.Stimulus, " ", 3, 0);
+
+                    output.Stimulus = Word_1 + "-" + Word_2 + "-" + Word_3 + "-" + Word_4;
+                    
+                    DebugMsg("storing Stimulus:" + output.Stimulus + "\n");    
+
+                    //output.visible_recording_starttime = start_t;
+                    //output.visible_recording_endtime = end_t;
+
+                    output.vis_WavFilename = test_page.WavFilename;
+                    DebugMsg("storing vis_WavFilename:" + output.vis_WavFilename +"\n");    
+
+                    output.visible_recording_starttime = test_page.RecStart;                  
+                    DebugMsg("storing visible_recording_starttime=" + string(test_page.RecStart) +"\n");    
+
+                    output.visible_recording_endtime   = test_page.RecStop;  
+                    DebugMsg("storing visible_recording_endtime=" + string(test_page.RecStop) +"\n");    
+
+
+                    DebugMsg("storing vis_rt=" + string(test_page.response.rt) +"\n");    
+                    output.vis_rt = test_page.response.rt;
+                    
+                    //test_output_append(output);
+
+                }
+            } //RecordWithOnScreenSentence
+
+
+
+
+
+            SubTrial RecordWithoutOnScreenSentence
+            {
+                on_event:entry()
+                {
+                    control.button_box.enable_all_buttons(CONTINUE);
+
+                    DebugMsg("readsent.zp: TheRealTest subtrial RecordWithoutOnScreenSentence \n");       
+
+                    //test_page::test_page.SecondAction(this, item, reference_time, test.cycle);
+
+                    start_t = now();
+                    //test_page::test_page.FirstAction(this, item, reference_time, test.cycle);
+
+                    test_page::test_page.CombinedAction(this, item, reference_time, test.cycle,false,true);
+
+                }
+
+                on_event:exit()
+                {
+                    end_t = now();
+                    speaking_duration = end_t- start_t;
+                    DebugMsg("responsetime without words on screen: ");
+                    DebugMsg(format(speaking_duration));
+                    DebugMsg("\n");
+
+                    DebugMsg("response.duration says:" + string(test_page.response.duration) +"\n");    
+    
+                    DebugMsg("response.start_time says:" + string(test_page.response.start_time) +"\n");    
+                    DebugMsg("response.finish_time says:" + string(test_page.response.finish_time) +"\n");    
+    
+              //      TestOutput output;
+                    //output.invisible_time_ms = speaking_duration;
+                    output.listnr = UseListNr;
+
+                    //output.invisible_recording_starttime = start_t;
+                    //output.invisible_recording_endtime = end_t;
+
+                    output.invisible_recording_starttime = test_page.RecStart; 
+                    DebugMsg("storing invisible_recording_starttime=" + string(test_page.RecStart) +"\n");    
+
+                    output.invisible_recording_endtime   = test_page.RecStop;                    
+
+
+                    output.inv_WavFilename = test_page.WavFilename;
+                    DebugMsg("storing inv_WavFilename:" + output.inv_WavFilename +"\n");    
+
+
+                    DebugMsg("storing invisible_recording_endtime=" + string(test_page.RecStop) +"\n");    
+
+
+                    DebugMsg("storing inv_rt=" + string(test_page.response.rt) +"\n");    
+                    output.inv_rt = test_page.response.rt;
+                    
+//--------------------------------------------------------------
+
+                    //removed from csv, as requested bij Sieb Nooteboom, 13-03-2014
+                    //output.exp_id  = expdb.experiment.id; 
+                    output.researcher_id = expdb.researcher.id; 
+                    output.session_id = format(expdb.experiment.session.id, 4);
+                    
+                    //removed from csv , as requested bij Sieb Nooteboom, 13-03-2014
+                    //output.part_id = expdb.participant.id;
+
+//--------------------------------------------------------------                    
+
+                    test_output_append(output);
+
+                }
+
+            } //RecordWithoutOnScreenSentence
+
+        } // end of TheRealTest block
+
+    } // end of (real) test block
+
+
+
+ //   Part
+ //   {
+ //       on_event:entry()
+ //       {
+ //           println("entering: part: on_event: entry \n");       
+
+ //           blank_page.action_auto(this, 500ms, 500ms);
+ //       }
+
+  //      on_event:exit()
+  //      {
+          //  println("entering: part: on_event: exit \n");       
+
+  //      }
+ //   }
+
+
+    Part thankyou
+    {
+        on_event:entry()
+        {
+         //   println("entering: part thankyou: on_event: entry \n");       
+
+            control.end_experiment();   // Check-in session.
+
+            exit_page.set_text(THANK_YOU_TEXT);
+            control.button_box.enable_all_buttons(CONTINUE);
+            exit_page.action(this, 10s);
+    
+        }
+
+            
+    }
+}   // end of experiment block
