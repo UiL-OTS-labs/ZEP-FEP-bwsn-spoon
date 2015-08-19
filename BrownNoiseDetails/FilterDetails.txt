@@ -1,0 +1,4 @@
+High-pass filter:
+Rolloff: 48 dB per octave
+Filter quality for 12 dB rollof
+Cutoff frequency [-3 dB]: 25 Hz

@@ -15,17 +15,17 @@ amixer -c 1 sset Front 100% on
 amixer -c 1 sset PCM 100% on
 
 # Play noise on a channel.
-AUDIOFILE="BrownNoise.wav"
+AUDIOFILE="BrownNoise_HighPass_25Hz.wav"
 MESSAGE="Press [Enter] to start playing $AUDIOFILE and [CTRL+C] once to pause, twice to exit"
 COMMAND="echo $MESSAGE && read && play $AUDIOFILE repeat 9999"
 TERMINALTITLE="Noise Sound Generator at $AUDIODEV"
 
 #USE sox ('play;') to play it via the following audiodevice
-gnome-terminal --title "$TERMINALTITLE" -x bash -c "while true; do $COMMAND; done"
+gnome-terminal --title "$TERMINALTITLE" -x bash -c "while true; do $COMMAND; done" &
 
 #start up FEP experiment
-gnome-terminal --title "FEP Console" -x bash -c "fep"
+gnome-terminal --title "FEP Console" -x bash -c "fep" &
 
 #copy over audacity settings
 cp -r audacity.cfg ~/.audacity-data/audacity.cfg
-audacity
+audacity &

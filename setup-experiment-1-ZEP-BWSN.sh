@@ -6,7 +6,7 @@ restore-default-audio-settings
 export AUDIODEV=plughw:1,0
 
 # Play noise on a channel.
-AUDIOFILE="BrownNoise.wav"
+AUDIOFILE="BrownNoise_HighPass_25Hz.wav"
 MESSAGE="Press [Enter] to start playing $AUDIOFILE and [CTRL+C] once to pause, twice to exit"
 COMMAND="echo $MESSAGE && read && play $AUDIOFILE repeat 9999"
 TERMINALTITLE="Noise Sound Generator at $AUDIODEV"

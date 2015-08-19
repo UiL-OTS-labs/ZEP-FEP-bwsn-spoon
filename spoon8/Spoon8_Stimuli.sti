@@ -176,7 +176,7 @@ BEGIN
     "tal pijl",	"",	4,	"",	"",	"",   "";   
     "bon zet",	"",	2,	"",	"",	"",   "";   
     "bek zeef",	"",	2,	"",	"",	"",   "";   
-    "baai zoo",	"",	2,	"",	"",	"",   "";   
+    "baai zoon",	"",	2,	"",	"",	"",   "";   
     "zaan boom",	"l",	2,	"baan",	"zoom",	"L",	"T";
 END						
 BEGIN						
@@ -232,7 +232,7 @@ BEGIN
     "leer gaai",	"",	4,	"",	"",	"",   "";   
     "kip zout",	"",	2,	"",	"",	"",   "";   
     "koud zeul",	"",	2,	"",	"",	"",	"";
-    "kef zoo",	"",	2,	"",	"",	"",   "";   
+    "kef zoon",	"",	2,	"",	"",	"",   "";   
     "zen kooi",		"l",	2,	"ken",	"zooi",	"L",	"T";
 END						
 BEGIN						
@@ -312,7 +312,7 @@ BEGIN
     "tien gal",	"",	4,	"",	"",	"",   "";   
     "bon roet",	"",	2,	"",	"",	"",   "";   
     "buig zat",	"",	2,	"",	"",	"",   "";   
-    "bang zoo",	"",	2,	"",	"",	"",   "";   
+    "bang zoon",	"",	2,	"",	"",	"",   "";   
     "zan bool",		"n",	2,	"ban",	"zool",	"L",	"T";
 END						
 BEGIN						
@@ -1062,7 +1062,7 @@ BEGIN
     "tal pijl",	"",	4,	"",	"",	"",   "";   
     "bon zet",	"",	2,	"",	"",	"",   "";   
     "bek zeef",	"",	2,	"",	"",	"",   "";   
-    "baai zoo",	"",	2,	"",	"",	"",   "";   
+    "baai zoon",	"",	2,	"",	"",	"",   "";   
     "zaag boot",	"l",	2,	"baag",	"zoot",	"N",	"T";
 END						
 BEGIN						
@@ -1118,7 +1118,7 @@ BEGIN
     "leer gaai",	"",	4,	"",	"",	"",   "";   
     "kip zout",	"",	2,	"",	"",	"",   "";   
     "koud zeul",	"",	2,	"",	"",	"",	"";
-    "kef zoo",	"",	2,	"",	"",	"",   "";   
+    "kef zoon",	"",	2,	"",	"",	"",   "";   
     "zef koog",		"n",	2,	"kef",	"zoog",	"L",	"T";
 END						
 BEGIN						
@@ -1198,7 +1198,7 @@ BEGIN
     "tien gal",	"",	4,	"",	"",	"",   "";   
     "bon roet",	"",	2,	"",	"",	"",   "";   
     "buig zat",	"",	2,	"",	"",	"",   "";   
-    "bang zoo",	"",	2,	"",	"",	"",   "";   
+    "bang zoon",	"",	2,	"",	"",	"",   "";   
     "zak boon",		"l",	2,	"bak",	"zoon",	"L",	"T";
 END						
 BEGIN						
