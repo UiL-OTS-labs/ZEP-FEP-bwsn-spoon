@@ -1,8 +1,8 @@
 /******************************************************************************\
-STIMULUS LIST:	spoon7.sti
+STIMULUS LIST:	spoon8.sti
 AUTHOR:		Sieb Nooteboom/Chris van Run (UiL-OTS)
-DATE:		2015-08-25
-RELATED FILES:	spoon8.fep
+DATE:		2015-08-27
+RELATED FILES:	spoon7.fep
 REMARKS:	Contains stimuli for both odd and even numbered subjects.
 \******************************************************************************/
 
@@ -615,7 +615,7 @@ BEGIN
     "tin weg",	"",	2,	"",	"",	"",   	"";   
     "pin leg",	"",	2,	"",	"",	"",	"";
     "wig wed",	"",	2,	"",	"",	"",   	"";   
-    "wek wil",	"l  ,	2,	"wik","wel","vl",		"T";
+    "wek wil",	"", 2,	"wik","wel","vl", "T";
 END	
 BEGIN						
     "bon kop",	"",	2,	"",	"",	"",   	"";   
@@ -1293,7 +1293,7 @@ BEGIN
     "peur bang",	"",	1,	"",	"",	"",	"";
     "puur bon",	"",	1,	"",	"",	"",   	"";   
     "boel pief",	"",	1,	"",	"",	"",	"";
-    "poen biet",	"l,	1,	"boen",	"piet",	"V",	"T";
+    "poen biet","",	1,	"boen",	"piet",	"V",	"T";
 END						
 BEGIN						
     "tuil hing",	"",	4,	"",	"",	"",   	"";   
