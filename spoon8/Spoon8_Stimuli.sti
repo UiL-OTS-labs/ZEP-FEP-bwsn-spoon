@@ -159,7 +159,7 @@ BEGIN
     "gis heer",		"",	4,	"",	"",	"",	"";
     "dep bit",		"",	1,	"",	"", "", "";
     "dul bor",		"",	1,	"",	"",	"",	"";
-    "duin buk",		"",	1,	"",	"",	"",	"";
+    "duin bok",		"",	1,	"",	"",	"",	"";
     "buik dof",		"l",	1,	"duik",	"bof",	"A",	"T";
 END						
 BEGIN						
@@ -254,7 +254,7 @@ BEGIN
     "doem tang", "",	4,	"",	"",	"",   "";   
     "pief koor", "",	1,	"",	"",	"",	"";
     "pas kaan",	"",	1,	"",	"",	"",   "";   
-    "peul kot",	"",	1,	"",	"",	"",   "";   
+    "puil kot",	"",	1,	"",	"",	"",   "";   
     "kuil pop",		"l",	1,	"puil",	"kop",	"A",	"T";
 END						
 BEGIN						
@@ -262,7 +262,7 @@ BEGIN
     "toet dar",	"",	4,	"",	"",	"",   "";   
     "kier peul",	"",	1,	"",	"",	"",	"";
     "kek paap",	"",	1,	"",	"",	"",   "";   
-    "keu poch",	"",	1,	"",	"",	"",   "";   
+    "kuit poch",	"",	1,	"",	"",	"",   "";   
     "puil kop",		"l",	1,	"kuil",	"pop",	"A",	"T";
 END						
 BEGIN    						
@@ -287,7 +287,7 @@ BEGIN
     "feut pen",	"",	1,	"",	"",	"",   "";   
     "fin puur",	"",	1,	"",	"",	"",   "";   
     "fief paap",	"",	1,	"",	"",	"",	"";
-    "pier vaas",	"l",	1,	"vier",	"paas",	"A",	"T";
+    "pier faal",	"l",	1,	"fier",	"paal",	"A",	"T";
 END						
 BEGIN						
     "douw lang",	"",	4,	"",	"",	"", 	""; 
@@ -295,14 +295,14 @@ BEGIN
     "pen feut",	"",	1,	"",	"",	"",   "";   
     "puur fin",	"",	1,	"",	"",	"",   "";   
     "paap fief",	"",	1,	"",	"",	"",	"";
-    "vier paas",	"l",	1,	"pier",	"vaas",	"A",	"T";
+    "fier paal",	"l",	1,	"pier",	"faal",	"A",	"T";
 END						
 BEGIN						
     "teil gang",	"",	4,	"",	"",	"",   "";   
     "fier taal",	"",	4,	"",	"",	"",   "";   
     "zon boet",	"",	2,	"",	"",	"",   "";   
     "zuip bang",	"",	2,	"",	"",	"",	"";
-    "zang boog",	"",	2,	"",	"",	"",	"";
+    "zang buit",	"",	2,	"",	"",	"",	"";
     "bal zuil",		"l",	2,	"zal","buil",	"A",	"T";
 END						
 BEGIN						
@@ -310,7 +310,7 @@ BEGIN
     "tien gal",	"",	4,	"",	"",	"",   "";   
     "bon roet",	"",	2,	"",	"",	"",   "";   
     "buig zat",	"",	2,	"",	"",	"",   "";   
-    "bang zoon",	"",	2,	"",	"",	"",   "";   
+    "bang zuig",	"",	2,	"",	"",	"",   "";   
     "zal buil",		"l",	2,	"bal","zuil",	"A",	"T";
 END						
 BEGIN						
@@ -542,7 +542,7 @@ BEGIN
     "gis heer",	"",	4,	"",	"",	"",	"";
     "pep bit",	"",	1,	"",	"", 	"", 	"";
     "pul bor",	"",	1,	"",	"",	"",	"";
-    "puin buk",	"",	1,	"",	"",	"",	"";
+    "puin bok",	"",	1,	"",	"",	"",	"";
     "buil pot",	"l",	1,	"puil",	"bot",	"V",	"T";
 END						
 BEGIN						
@@ -1012,7 +1012,7 @@ BEGIN
     "mouw der",	"",	4,	"",	"",	"",   "";   
     "bier duit",	"",	1,	"",	"",	"",	"";
     "bok dun",	"",	1,	"",	"",	"",   "";   
-    "boor dek",	"",	1,	"",	"",	"",   "";   
+    "bot dek",	"",	1,	"",	"",	"",   "";   
     "dof bes",		"l",	1,	"bof",	"des",	"A",	"T";
 END						
 BEGIN						
@@ -1020,7 +1020,7 @@ BEGIN
     "nauw lel",	"",	4,	"",	"",	"",   "";   
     "dier buit",	"",	1,	"",	"",	"",	"";
     "dok bun",	"",	1,	"",	"",	"",   "";   
-    "door bes",	"",	1,	"",	"",	"",   "";   
+    "dot bes",	"",	1,	"",	"",	"",   "";   
     "bof det",		"l",	1,	"dof",	"bes",	"A",	"T";
 END						
 BEGIN						
@@ -1045,7 +1045,7 @@ BEGIN
     "dep bit",	"",	1,	"",	"",	"",   "";   
     "dol bas",	"",	1,	"",	"",	"",   "";   
     "duit bon",	"",	1,	"",	"",	"",   "";   
-    "buig door",		"l",	1,	"duig",	"boor",	"A",	"T";
+    "buig dof",		"l",	1,	"duig",	"bof",	"A",	"T";
 END						
 BEGIN						
     "huil tik",	"",	4,	"",	"",	"",   "";   
@@ -1053,7 +1053,7 @@ BEGIN
     "bes dim",	"",	1,	"",	"",	"",   "";   
     "bad dop",	"",	1,	"",	"",	"",   "";   
     "buig dok",	"",	1,	"",	"",	"",   "";   
-    "duig boor",		"l",	1,	"buig",	"door",	"A",	"T";
+    "duig bof",		"l",	1,	"buig",	"dof",	"A",	"T";
 END						
 BEGIN						
     "rouw wal",	"",	4,	"",	"",	"",   "";   
@@ -1084,7 +1084,7 @@ BEGIN
     "poes meel",	"",	4,	"",	"",	"",   "";   
     "goor beur",	"",	2,	"",	"",	"",	"";
     "gok daas",	"",	2,	"",	"",	"",   "";   
-    "gijp beef",	"",	2,	"",	"",	"",	"";
+    "gup bad",	"",	2,	"",	"",	"",	"";
     "bul gas",	"l",	2,	"gul",	"bas",	"A",	"T";
 END						
 BEGIN						
@@ -1148,7 +1148,7 @@ BEGIN
     "toet dar",	"",	4,	"",	"",	"",   "";   
     "kier peul",	"",	1,	"",	"",	"",	"";
     "kek paap",	"",	1,	"",	"",	"",   "";   
-    "keu poch",	"",	1,	"",	"",	"",   "";   
+    "keus poch",	"",	1,	"",	"",	"",   "";   
     "peur kol",		"l",	1,	"keur",	"pol",	"A",	"T";
 END						
 BEGIN						
@@ -1172,20 +1172,20 @@ BEGIN
     "sop teel",		"",	4,	"",	"",	"",   	"";   
     "feut pen",	"",	1,	"",	"",	"",   "";   
     "fin puur",	"",	1,	"",	"",	"",   "";   
-    "fief paap",	"",	1,	"",	"",	"",	"";
-    "pier faal",	"l",	1,	"fier",	"paal",	"A",	"T";
+    "fien paap",	"",	1,	"",	"",	"",	"";
+    "pief faal",	"l",	1,	"fief",	"paal",	"A",	"T";
 END						
 BEGIN						
     "douw lang",	"",	4,	"",	"",	"", 	""; 
     "sop teel",		"",	4,	"",	"",	"",   	"";   
     "pen feut",	"",	1,	"",	"",	"",   "";   
     "puur fin",	"",	1,	"",	"",	"",   "";   
-    "paap fief",	"",	1,	"",	"",	"",	"";
-    "fier paal",	"l",	1,	"pier",	"faal",	"A",	"T";
+    "piep faam",	"",	1,	"",	"",	"",	"";
+    "fief paal",	"l",	1,	"pief",	"faal",	"A",	"T";
 END						
 BEGIN						
     "teil gang",	"",	4,	"",	"",	"",   "";   
-    "fier taal",	"",	4,	"",	"",	"",   "";   
+    "vies taal",	"",	4,	"",	"",	"",   "";   
     "zon boet",	"",	2,	"",	"",	"",   "";   
     "zuip bang",	"",	2,	"",	"",	"",	"";
     "zang boog",	"",	2,	"",	"",	"",	"";
@@ -1227,7 +1227,7 @@ BEGIN
     "rijk toos",	"",	4,	"",	"",	"",   "";   
     "tem hiel",	"",	4,	"",	"",	"",   "";   
     "dat goor",	"",	2,	"",	"",	"",   "";   
-    "daan  geul",	"",	2,	"",	"",	"",	"";
+    "daan geul",	"",	2,	"",	"",	"",	"";
     "dok gaat",	"",	2,	"",	"",	"",   "";   
     "gom daar",		"l",	2,	"dom",	"gaar",	"A",	"T";
 END						
