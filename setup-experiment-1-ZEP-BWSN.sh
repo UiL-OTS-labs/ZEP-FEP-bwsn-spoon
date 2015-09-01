@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if ! [[aplay -l | grep -i Xonar ]]; then
+	zenity --warning --text 'Soundcards have not correctly been initiated. A reboot is recommended!'
+	exit
+fi
+
 #NOTE: configured for PHON1 computer.
 restore-default-audio-settings
 
