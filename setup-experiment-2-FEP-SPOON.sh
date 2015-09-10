@@ -1,6 +1,8 @@
 #!/bin/bash
-if ! [[aplay -l | grep -i Xonar ]]; then
-	zenity --warning --text 'Soundcards have not correctly been initiated. A reboot is recommended!'
+present=$(aplay -l | grep -ic 'Xonar');
+if [ $present -eq 1 ] 
+	then
+		zenity --warning --text 'Soundcards have not correctly been initiated. A reboot is recommended!'
 	exit
 fi
 
