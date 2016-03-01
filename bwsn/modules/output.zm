@@ -79,6 +79,8 @@ record TestOutput
     int         NrSyll;
     string      conson;
     int         NrInSet;
+    string      Cons;
+    string      Sim;
     string      Cond;
     string      Stimulus;
     string      vis_WavFilename;

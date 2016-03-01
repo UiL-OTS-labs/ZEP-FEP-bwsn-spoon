@@ -1,12 +1,12 @@
 ### test_prac_items ###;;;;;
-OrigNr;Set;NrSyll;Cond;Stimulus;List
-	1;	0;	1;	"B";	"dammen bekken waken peper";0
-	2;	0;	2;	"W";	"bukken vulcaan bokaal nimmer";0
-	3;	0;	4;	"N";	"gieten dieren boris kapper";0
-	4;	0;	4;	"N";	"lissen kieren kuren lekker";0
-	5;	0;	4;	"N";	"bedis lemmet rijmen getol";0
-	6;	0;	2;	"W";	"lommer rokin recruut lasser";0
-	7;	0;	3;	"S";	"velours kanon konijn geloof";0
-	8;	0;	3;	"S";	"vingen gerei moreel helen";0
-	9;	0;	3;	"S";	"koppig roelien relaas keper";0
-	10;	0;	1;	"B";	"meter kennis tunnel joker";0
+OrigNr;Set;NrSyll;Cons;SIM;COND;Stimulus;List
+1;0;1;"B";0;0;"daf bekken waken pep"; 0
+2;0;2;"W";0;0;"bukken vulcaan bokaal nimmer"; 0
+3;0;4;"N";0;0;"git dieren boris kal"; 0
+4;0;4;"N";0;0;"lis kieren kuren lek"; 0
+5;0;4;"N";0;0;"bedis lemmet rijmen getol";0
+6;0;2;"W";0;0;"lommer rokin recruut lasser";0
+7;0;3;"S";0;0;"velours kanon konijn geloof";0
+8;0;3;"S";0;0;"vin gerei moreel hel"; 0
+9;0;3;"S";0;0;"kol roelien relaas keep";0
+10;0;1;"B";0;0;"meter kennis tunnel joker";0

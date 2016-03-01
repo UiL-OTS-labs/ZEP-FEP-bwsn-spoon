@@ -1,98 +1,98 @@
-### itemlist1 ###;;;;;
-OrigNr;Set;NrSyll;Cond;Stimulus;List
-	1;	1;	1;	"B";	"water rapper lommer bikkel";1
-	2;	1;	2;	"S";	"bewijs parijs dorien gewis";1
-	3;	1;	3;	"W";	"woeker rapport meloen nuffig";1
-	4;	1;	4;	"N";	"lawaai pieren  duren benul";1
-	5;	2;	1;	"B";	"waggel radar mieren nissan";1
-	6;	2;	2;	"W";	"gewoon direct limiet juweel";1
-	7;	2;	3;	"S";	"woning radauw marien nimmer";1
-	8;	2;	4;	"N";	"gewis dieren parel bezin";1
-	9;	3;	1;	"B";	"neder molen roeper wallen";1
-	10;	3;	2;	"W";	"benut lamel poreus genies";1
-	11;	3;	3;	"S";	"noten maleis rapier wikkel";1
-	12;	3;	4;	"N";	"geniet lemming duren beween";1
-	13;	4;	1;	"B";	"nepper morren ridder wegen";1
-	14;	4;	2;	"W";	"teniet remous zover tabak";1
-	15;	4;	3;	"S";	"nader merijn vizier bitter";1
-	16;	4;	4;	"N";	"genot raming lommer benul";1
-	17;	5;	1;	"B";	"bakker vazen maken nodig";1
-	18;	5;	2;	"W";	"debuut zoveel romein genoot";1
-	19;	5;	3;	"S";	"botter vazal radijs wielen";1
-	20;	5;	4;	"N";	"gebod zuiver lobben rivier";1
-	21;	6;	1;	"B";	"vader bellen kommer pooier";1
-	22;	6;	2;	"W";	"gevat labiel topaas bekeer";1
-	23;	6;	3;	"S";	"voeder ballon komeet peiling";1
-	24;	6;	4;	"N";	"ravijn  zever lebber gebed";1
-	25;	7;	1;	"B";	"pieter kamer vezel bowling";1
-	26;	7;	2;	"W";	"tepas mekaar libel devies";1
-	27;	7;	3;	"S";	"poging kameel balein visser";1
-	28;	7;	4;	"N";	"tapijt makker wever gebed";1
-	29;	8;	1;	"B";	"kajak pater rekel ladder";1
-	30;	8;	2;	"W";	"bekocht tapijt makaak gepoch";1
-	31;	8;	3;	"S";	"koter patat rekest lover";1
-	32;	8;	4;	"N";	"bekom  karig tepel malloot";1
-	33;	9;	1;	"B";	"liever rakker peter ketter";1
-	34;	9;	2;	"W";	"gelik karos topaas bekeer";1
-	35;	9;	3;	"S";	"logger raket potent kussen";1
-	36;	9;	4;	"N";	"belet kerel mocca tapuit";1
-	37;	10;	1;	"B";	"lekker raven builen veter";1
-	38;	10;	2;	"W";	"gelijk varaan koraal beleg";1
-	39;	10;	3;	"S";	"lokker ravijn banaan peddel";1
-	40;	10;	4;	"N";	"geloof virus tafel tekijk";1
-	41;	11;	1;	"B";	"jekker later doping koppig";1
-	42;	11;	2;	"W";	"gejacht talent viriel bezoek";1
-	43;	11;	3;	"S";	"juffer latijn rivier meiden";1
-	44;	11;	4;	"N";	"gejok teler  varen bezoek";1
-	45;	12;	1;	"B";	"jager loper rover loeder";1
-	46;	12;	2;	"W";	"gejoel paleis roman fideel";1
-	47;	12;	3;	"S";	"jammer kapel metaal harig";1
-	48;	12;	4;	"N";	"bejaard paling deler gemaal";1
-	49;	13;	1;	"B";	"dolen jura jarig duiker";1
-	50;	13;	2;	"W";	"duvel jorien jeroen doper";1
-	51;	13;	3;	"S";	"gedoe radijs redoute gedaas";1
-	52;	13;	4;	"N";	"gedut redding roedel bedompt";1
-	53;	14;	1;	"B";	"zaling dame duimel zakker";1
-	54;	14;	2;	"W";	"zuiger domein damast zaling";1
-	55;	14;	3;	"S";	"bezaan modern madam seizoen";1
-	56;	14;	4;	"N";	"gezag moeder modder bezet";1
-	57;	15;	1;	"B";	"kennis gekkie gele kater";1
-	58;	15;	2;	"W";	"kotter geluk geloof kapper";1
-	59;	15;	3;	"S";	"bekijk legaat legaal bekort";1
-	60;	15;	4;	"N";	"bekoor lachen lichaam bekoel";1
-	61;	16;	1;	"B";	"gaper kale koele gene";1
-	62;	16;	2;	"W";	"gokker kalot Colijn gister";1
-	63;	16;	3;	"S";	"begoot lakei loket begeef";1
-	64;	16;	4;	"N";	"begaf lakken lekken tegek";1
-	65;	17;	1;	"B";	"tijdig deken duiker topper";1
-	66;	17;	2;	"W";	"tukker decaan ducaat tinnef";1
-	67;	17;	3;	"S";	"getij kadet kado beton";1
-	68;	17;	4;	"N";	"getik kader koddig getal";1
-	69;	18;	1;	"B";	"tuigen dapper doping togen";1
-	70;	18;	2;	"W";	"tering depot depêche toner";1
-	71;	18;	3;	"S";	"getik pedant pedaal getob";1
-	72;	18;	4;	"N";	"getal peddel  padden baton";1
-	73;	19;	1;	"B";	"peter tekkel tikker poker";1
-	74;	19;	2;	"W";	"pieter tekeer tekort pover";1
-	75;	19;	3;	"S";	"gepees katoen katijf bepoot";1
-	76;	19;	4;	"N";	"bepakt ketel  kater gepeins";1
-	77;	20;	1;	"B";	"dader zuilen zaling daler";1
-	78;	20;	2;	"W";	"dekking zeloot zolang duiten";1
-	79;	20;	3;	"S";	"gedaan lazuur lysol gedoopt";1
-	80;	20;	4;	"N";	"bedot lozing lezer  gedimd";1
-	81;	21;	1;	"B";	"sjalen sufferd saffie sjezen";1
-	82;	21;	2;	"W";	"sjieker sofie saffier sjacher";1
-	83;	21;	3;	"S";	"gesjouw facet fossiel gesjok";1
-	84;	21;	4;	"N";	"gesjor fasces facie  gesjans";1
-	85;	22;	1;	"B";	"sijpel sjoemel sjekkie sollen";1
-	86;	22;	2;	"W";	"soppen sjamaan chauffeur cello";1
-	87;	22;	3;	"S";	"gesip machien michel gesol";1
-	88;	22;	4;	"N";	"besef misje  muisje gesim";1
-	89;	23;	1;	"B";	"vitter zone zanik voeder";1
-	90;	24;	2;	"W"; "vielen zonee zonaal vodden”;1
-	91;	23;	3;	"S";	"schavuit nasaal nazist tevol";1
-	92;	23;	4;	"N";	"geval nazi neuzen gevang";1
-	93;	24;	1;	"B";	"zessen vutter vette zullen";1
-	94;	24;	2;	"W";	"zeilen votief vitaal zagen";1
-	95;	24;	3;	"S";	"bazin tevoet gevat gazon";1
-	96;	24;	4;	"N";	"dozijn tover toeval gezang";1
+### itemlist1 ###
+"OrigNr";"Set";"NrSyll";"Cons";"SIM";"COND";"Stimulus";"List"
+1;1;1;"wrlb";0;"B";"water rapper lommer bikkel";1
+2;1;2;"wpdg";0;"W";"nuttig lamel poreus niessen";1
+3;1;3;"nplg";0;"S";"noteer maleis rapier varaan";1
+4;1;4;"wrks";0;"N";"geniet lemming weiland gevit";1
+5;2;1;"nmrw";0;"B";"nepper morren ridder wegen";1
+6;2;2;"kdlw";0;"W";"moter remous zover takken";1
+7;2;3;"bdrw";0;"S";"papier merijn vizier bedot";1
+8;2;4;"wrzl";0;"N";"genot raming lodder bezit";1
+9;3;1;"nmrw";0;"B";"bakker vazen maken nodig";1
+10;3;2;"nlpn";0;"W";"doeken zoveel romein goten";1
+11;3;3;"tlpr";0;"S";"beman vazal radijs gewoel";1
+12;3;4;"nmlv";0;"N";"wijzer parijs dorien gozer";1
+13;4;1;"nmrw";0;"B";"gebod zuiver lommer rivier ";1
+14;4;2;"mrzt";0;"W";"vader bellen kommer pooier";1
+15;4;3;"przd";0;"S";"vatten labiel topaas doelen";1
+16;4;4;"nmdz";0;"N";"tomaat kanon boleet gevat";1
+17;5;1;"bvmn";0;"B";"ravijn lening zeker gebed ";1
+18;5;2;"dzrg";0;"W";"pieter kamer vezel bowling";1
+19;5;3;"mzdw";0;"S";"passen mekaar libel buiging";1
+20;5;4;"bvmv";0;"N";"rabbijn kameel balein tonijn";1
+21;6;1;"vbkp";0;"B";"tapijt makker wever gebed ";1
+22;6;2;"vltd";0;"W";"koper pater rekel ladder";1
+23;6;3;"mnlv";0;"S";"kaneel rapport meloen figuur";1
+24;6;4;"vnkb";0;"N";"kochten tapijt makaak pochen";1
+25;7;1;"pkvb";0;"B";"rozijn patat rekest manier";1
+26;7;2;"pmlb";0;"W";"bekom tepel karig malloot ";1
+27;7;3;"bmln";0;"S";"liever rakker peter ketter";1
+28;7;4;"pkvb";0;"N";"likken karos topaas duiker";1
+29;8;1;"kprl";0;"B";"balein raket potent kozijn";1
+30;8;2;"ktmp";0;"W";"belet kerel mocca tapuit ";1
+31;8;3;"ztkn";0;"S";"lekker raven builen veter";1
+32;8;4;"kprl";0;"N";"lijken varaan koraal zeggen";1
+33;9;1;"lrpk";0;"B";"loket ravijn banaan pedant";1
+34;9;2;"lktd";0;"W";"lawaai pieren bakken gesop";1
+35;9;3;"rktz";0;"S";"geloof virus tafel tekijk";1
+36;9;4;"lrkp";0;"N";"jekker later doping koppig";1
+37;10;1;"lrbv";0;"B";"jager talent viriel zoeker";1
+38;10;2;"lvkz";0;"W";"meneer latijn rivier moreel";1
+39;10;3;"kvnd";0;"S";"gejok teler varen bezoek ";1
+40;10;4;"rlfk";0;"N";"jager loper rover moedig";1
+41;11;1;"jldk";0;"B";"joelen paleis roman moker";1
+42;11;2;"jtvz";0;"W";"kopij kajuit metaal rozijn";1
+43;11;3;"ntvr";0;"S";"bejaard paling deren gemaal";1
+44;11;4;"jlrz";0;"N";"dolen jura jarig duiker";1
+45;12;1;"jlrm";0;"B";"waggel radar mieren nissan";1
+46;12;2;"jprm";0;"W";"duvel jorien jeroen doper";1
+47;12;3;"pjtz";0;"S";"gedoe robijn gebal gedaas";1
+48;12;4;"jprm";0;"N";"getut redding roedel beton ";1
+49;13;1;"dj";1;"B";"zaling dame duimel zakker";1
+50;13;2;"dj";1;"W";"zuiger domein damast zaling";1
+51;13;3;"dr";1;"S";"bezaan modern madam seizoen";1
+52;13;4;"td";1;"N";"gezag moeder modder bezet ";1
+53;14;1;"zd";1;"B";"kennis gekkie gele kater";1
+54;14;2;"zd";1;"W";"kotter geluk geloof kapper";1
+55;14;3;"zd";1;"S";"bekijk legaat legaal bekort";1
+56;14;4;"zd";1;"N";"koning direct limiet weiden";1
+57;15;1;"kg";1;"B";"bekoor lachen lichaam bekoel ";1
+58;15;2;"kg";1;"W";"gaper kale koele gene";1
+59;15;3;"kg";1;"S";"gokker kalot Colijn gister";1
+60;15;4;"kg";1;"N";"begoot lakei loket begeef";1
+61;16;1;"gk";1;"B";"begaf lakken lekken tegek ";1
+62;16;2;"gk";1;"W";"tijdig deken duiker topper";1
+63;16;3;"gk";1;"S";"tukker decaan ducaat tinnef";1
+64;16;4;"gk";1;"N";"getij kadet kado beton";1
+65;17;1;"td";1;"B";"getik kader koddig getal";1
+66;17;2;"td";1;"W";"tuigen dapper doping togen";1
+67;17;3;"td";1;"S";"rebel radauw marien bewaar";1
+68;17;4;"td";1;"N";"tering depot dep?che toner";1
+69;18;1;"td";1;"B";"getik pedant pedaal getob";1
+70;18;2;"td";1;"W";"getal peddel  vodden baton";1
+71;18;3;"td";1;"S";"peter tekkel tikker poker";1
+72;18;4;"td";1;"N";"pieter tekeer tekort pover";1
+73;19;1;"pt";1;"B";"gepees katoen katijf bepoot";1
+74;19;2;"pt";1;"W";"bepakt ketel kater  gepeins";1
+75;19;3;"pt";1;"S";"dader zuilen zaling daler";1
+76;19;4;"pt";1;"N";"dekking zeloot zolang duiten";1
+77;20;1;"dz";1;"B";"gedaan lazuur lysol gedoopt";1
+78;20;2;"dz";1;"W";"gewis dieren bezig palet";1
+79;20;3;"dz";1;"S";"bedot lozing  lezer gedimd";1
+80;20;4;"dz";1;"N";"sjalen sufferd saffie sjezen";1
+81;21;1;"sjs";1;"B";"sjieker sofie saffier sjacher";1
+82;21;2;"sjs";1;"W";"gesjouw facet fossiel gesjok";1
+83;21;3;"sjs";1;"S";"gesjor  rozig lezen gesjouw";1
+84;21;4;"sjz";1;"N";"sijpel sjoemel sjekkie sollen";1
+85;22;1;"ssj";1;"B";"soppen sjamaan chauffeur cello";1
+86;22;2;"ssj";1;"W";"gesip machien michel gesol";1
+87;22;3;"ssj";1;"S";"besef misje muisje gesim";1
+88;22;4;"ssj";1;"N";"vitter zone zanik voeder";1
+89;23;1;"vz";1;"B";"neder molen roeper wallen";1
+90;23;2;"kp";1;"W";"kamer piloot palet koter";1
+91;23;3;"vz";1;"S";"schavuit nasaal bezoek tevol";1
+92;23;4;"vz";1;"N";"geval razen  neuzen gevang";1
+93;24;1;"zv";1;"B";"zessen vutter vette zullen";1
+94;24;2;"zv";1;"W";"zeilen votief vitaal zagen";1
+95;24;3;"zv";1;"S";"bazin tevoet gevat gazon";1
+96;24;4;"zv";1;"N";"dozijn tover toeval gezang";1

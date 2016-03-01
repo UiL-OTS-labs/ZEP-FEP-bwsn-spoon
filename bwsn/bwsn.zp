@@ -344,6 +344,9 @@ Experiment experiment
                     output.NrSyll = item.NrSyll;
 
                     output.Cond = item.Cond;
+                    output.Cons = item.Cons;
+                    output.Sim = item.Sim;
+
                     output.List = item.List;
             //        output.visible_time_ms = speaking_duration;
                     output.listnr = UseListNr;
@@ -463,7 +466,7 @@ Experiment experiment
                     //removed from csv, as requested bij Sieb Nooteboom, 13-03-2014
                     //output.part_id = expdb.participant.id;
 
-//--------------------------------------------------------------                    
+//--------------------------------------------------------------                 
                     test_output_append(output);
 
                 }
@@ -638,6 +641,9 @@ Experiment experiment
                     output.NrSyll = item.NrSyll;
 
                     output.Cond = item.Cond;
+                    output.Cons = item.Cons;
+                    output.Sim = item.Sim;
+
                     output.List = item.List;
             //        output.visible_time_ms = speaking_duration;
                     output.listnr = UseListNr;
