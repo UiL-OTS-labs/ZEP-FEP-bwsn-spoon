@@ -74,6 +74,7 @@ record TestOutput
     int         listnr;
 //    ItemType    cond;             // item id
  
+//	OrigNr	SET	NrInSet	CONS	SIM	COND	STIMULUS			LIST
 
     int         OrigNr;
     int         Set;
