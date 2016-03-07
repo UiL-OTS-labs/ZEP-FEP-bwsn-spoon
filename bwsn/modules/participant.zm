@@ -21,6 +21,34 @@ int[..] PARTICIPANT_CHOSEN_ORDER;
 void create_participant_fields()
 {
     expdb.participant.add_string_field("ORDER_SOURCE_PPID");
+
+    expdb.participant.set_string_field("ORDER_SOURCE_PPID", previous_participant_with_empty_order());
+    
+}
+
+string previous_participant_with_empty_order()
+{
+    string result = "";
+
+    int nparticipants = expdb.num_participants;
+    string current_participant = expdb.participant.id;
+    
+    if(nparticipants <= 1)
+        return result;
+
+    expdb.checkin_participant(); // Note: we should definitely restore this!
+    string previous_pp_id = expdb.participant_id(nparticipants-2);
+
+    expdb.checkout_participant(previous_pp_id, true);
+    println(selected_group);
+    if(expdb.participant.has_string_field("ORDER_SOURCE_PPID") && expdb.participant.get_string_field("ORDER_SOURCE_PPID") == "")
+        result = expdb.participant.id;
+    expdb.checkin_participant();
+
+
+    expdb.checkout_participant(current_participant, false); // this is where we restore the checkin!
+
+    return result;
 }
 
 // Checks current values of participant record fields.
