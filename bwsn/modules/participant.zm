@@ -26,27 +26,41 @@ void create_participant_fields()
 // Checks current values of participant record fields.
 int check_participant_fields()
 {
+    int result = OK;
+
     if (!expdb.participant.has_string_field("ORDER_SOURCE_PPID")) return ERROR;
 
 
     if(expdb.participant.get_string_field("ORDER_SOURCE_PPID") != "")
-        load_participant_order(expdb.participant.get_string_field("ORDER_SOURCE_PPID"));
+        result = load_participant_order(expdb.participant.get_string_field("ORDER_SOURCE_PPID"));
     else
         PARTICIPANT_CHOSEN_ORDER.size = 0;
 
-    return OK;
+    return result;
 }
 
-void load_participant_order(string ppid)
-{
-    println("Loading in order from: " + ppid);
+int load_participant_order(string ppid)
+{   
+    string filepath_order = data_dir() + "orders";
 
-    string filepath = data_dir() + "/orders/" + ppid + ".csv";
+    if(!file_exists(filepath_order))
+        create_dir_tree(filepath_order);
 
-    if(file_exists(filepath))
+    string filepath = filepath_order + "/" + ppid + ".csv";
+
+    if(file_exists(filepath) && file_readable(filepath))
+    {
+        println("Loading in order from: " + ppid);
         PARTICIPANT_CHOSEN_ORDER.load(filepath, true, 1);
+        println("Done");
+    }
     else
-        println("Warning: could not find order: " + ppid);
+    {
+        println("Error: could not read stimuli order from selected previous participant: " + ppid + ". Does it/he/she exist?");
+        return ERROR;
+    }
+
+    return OK;
 }
 
 void write_participant_order_to_file()

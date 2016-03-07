@@ -19,7 +19,7 @@ HISTORY:
 // been created. At this point the database is fully accessible.
 int setup_pre_session()
 {
-    return OK;
+	return OK; //check_participant_fields();
 }
  
  
